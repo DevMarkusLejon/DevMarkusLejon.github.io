@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portfolio for Markus Lejon, an engineering physics graduate focused on robotics, edge AI, computer vision, and autonomous systems.">
+    <meta name="theme-color" content="#f6f4ef">
+    <title>Markus Lejon | Edge AI & Robotics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <nav class="nav-shell">
+        <a class="brand" href="#top" aria-label="Markus Lejon home">
+          <span class="brand-mark" aria-hidden="true">ML</span>
+          <span>Markus Lejon</span>
+        </a>
+        <div class="nav-links" aria-label="Sections">
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <canvas id="systemCanvas" class="system-canvas" aria-hidden="true"></canvas>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Malmo / Lund / Copenhagen</p>
+            <h1 id="hero-title">Edge AI & Robotics Engineer</h1>
+            <p class="hero-lede">
+              Engineering Physics MSc candidate at LTH building learning-based robotic systems, from
+              GPU-parallel simulation to perception, decision-making, and control on real platforms.
+            </p>
+            <div class="hero-actions" aria-label="Primary actions">
+              <a class="button primary" href="#projects">View projects</a>
+              <a class="button secondary" href="mailto:markus.lejon99@hotmail.com">Email me</a>
+            </div>
+          </div>
+
+          <aside class="signal-panel" aria-label="Technical profile">
+            <div class="signal-header">
+              <span>Current Focus</span>
+              <span class="status-pill">Available 2026</span>
+            </div>
+            <dl class="signal-list">
+              <div>
+                <dt>Autonomy</dt>
+                <dd>RL policies, behavior trees, robotic manipulation</dd>
+              </div>
+              <div>
+                <dt>Edge AI</dt>
+                <dd>Computer vision, embedded ML, performance constraints</dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd>Python, C++, PyTorch, ROS2, Isaac Sim, Linux</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section intro-section" aria-labelledby="intro-title">
+        <div class="section-heading">
+          <p class="eyebrow">Profile</p>
+          <h2 id="intro-title">I connect physical systems with production-minded software.</h2>
+        </div>
+        <div class="intro-copy">
+          <p>
+            My background combines engineering physics, robotics, control, and applied AI. I enjoy
+            work where models have to survive contact with hardware, real data, and system constraints.
+          </p>
+          <p>
+            I am looking for roles in Skane or Greater Copenhagen across robotics ML, embedded AI,
+            computer vision, autonomy, and technical software engineering.
+          </p>
+        </div>
+      </section>
+
+      <section id="projects" class="section" aria-labelledby="projects-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Selected Work</p>
+          <h2 id="projects-title">Projects</h2>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card featured">
+            <div class="project-visual" aria-hidden="true">
+              <div class="robot-core">
+                <span class="joint joint-a"></span>
+                <span class="joint joint-b"></span>
+                <span class="joint joint-c"></span>
+                <span class="joint joint-d"></span>
+              </div>
+              <div class="trace trace-a"></div>
+              <div class="trace trace-b"></div>
+              <div class="trace trace-c"></div>
+            </div>
+            <div class="project-content">
+              <p class="project-kicker">Master's Thesis</p>
+              <h3>RL-Based Robotic Manipulation on Boston Dynamics Spot</h3>
+              <p>
+                Developed reinforcement learning policies for loco-manipulation tasks such as door
+                opening and traversal, with GPU-parallel training environments in Isaac Sim and Isaac Lab.
+              </p>
+              <ul class="tag-list" aria-label="Technologies">
+                <li>Reinforcement Learning</li>
+                <li>Isaac Sim</li>
+                <li>Isaac Lab</li>
+                <li>Sim-to-real</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-content">
+              <p class="project-kicker">Autonomy System</p>
+              <h3>Behavior Tree Control for Autonomous Spot Tasks</h3>
+              <p>
+                Designed a behavior-tree pipeline for detection, approach, manipulation, and delivery,
+                integrating vision-based perception with task-level control.
+              </p>
+              <ul class="tag-list" aria-label="Technologies">
+                <li>ROS2</li>
+                <li>Behavior Trees</li>
+                <li>Computer Vision</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-content">
+              <p class="project-kicker">Manipulation</p>
+              <h3>UR5e Chess Robot</h3>
+              <p>
+                Built a robotic manipulation workflow using kinematics, calibration, and motion planning
+                for reliable physical execution.
+              </p>
+              <ul class="tag-list" aria-label="Technologies">
+                <li>Motion Planning</li>
+                <li>Kinematics</li>
+                <li>Calibration</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" class="section skills-section" aria-labelledby="skills-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Capabilities</p>
+          <h2 id="skills-title">Technical Skills</h2>
+        </div>
+        <div class="skills-grid">
+          <section class="skill-block" aria-labelledby="skills-languages">
+            <h3 id="skills-languages">Languages</h3>
+            <p>Python, C++, C#, Java</p>
+          </section>
+          <section class="skill-block" aria-labelledby="skills-ai">
+            <h3 id="skills-ai">AI / ML</h3>
+            <p>Reinforcement learning, PyTorch, computer vision, model evaluation</p>
+          </section>
+          <section class="skill-block" aria-labelledby="skills-robotics">
+            <h3 id="skills-robotics">Robotics</h3>
+            <p>ROS2, behavior trees, kinematics, sensors, planning, system integration</p>
+          </section>
+          <section class="skill-block" aria-labelledby="skills-systems">
+            <h3 id="skills-systems">Systems</h3>
+            <p>Linux, GPU workflows, embedded constraints, real-time performance thinking</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="section experience-section" aria-labelledby="experience-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">Recent Work</h2>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-date">2023-2025</div>
+            <div>
+              <h3>Tetra Pak, Lund | Technical Service Consultant</h3>
+              <p>
+                Worked in an automated Miniload warehouse environment requiring precision, process
+                discipline, and consistent execution under strict quality expectations.
+              </p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-date">2019-2026</div>
+            <div>
+              <h3>Lund University, LTH | MSc Engineering Physics</h3>
+              <p>
+                Specialization in AI, robotics, and control, supported by a broad foundation in
+                mathematics, physics, and technical software development.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section" aria-labelledby="contact-title">
+        <div class="contact-copy">
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Let's talk about robotics, edge AI, or technical software roles.</h2>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="mailto:markus.lejon99@hotmail.com">markus.lejon99@hotmail.com</a>
+          <a class="button secondary" href="https://www.linkedin.com/in/markus-lejon/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="button secondary" href="https://github.com/DevMarkusLejon" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; <span id="year"></span> Markus Lejon</span>
+      <a href="#top">Back to top</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
