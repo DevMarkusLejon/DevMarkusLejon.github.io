@@ -23,6 +23,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 92px;
+}
+
 body {
   margin: 0;
   background:
@@ -116,6 +120,7 @@ a {
   color: var(--muted);
   font-size: 0.95rem;
   font-weight: 700;
+  white-space: nowrap;
   text-decoration: none;
 }
 
@@ -486,6 +491,8 @@ h3 {
 }
 
 .project-card p:not(.project-kicker),
+.media-card p,
+.launcher-panel p,
 .skill-block p,
 .timeline-item p {
   margin: 0;
@@ -510,6 +517,212 @@ h3 {
   padding: 0.36rem 0.52rem;
   font-size: 0.76rem;
   font-weight: 800;
+}
+
+.media-section {
+  border-top: 1px solid rgba(23, 27, 31, 0.1);
+}
+
+.media-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.media-card {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(23, 27, 31, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.84);
+}
+
+.media-card.wide {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+}
+
+.project-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #171b1f;
+  object-fit: cover;
+}
+
+.media-content {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  padding: 1.2rem;
+}
+
+.ai-lab-section {
+  padding-top: 0;
+}
+
+.lab-layout {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
+}
+
+.launcher-panel,
+.grid-demo {
+  display: grid;
+  gap: 1.25rem;
+  border: 1px solid rgba(23, 27, 31, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.86);
+  padding: 1.25rem;
+}
+
+.launcher-panel {
+  align-content: start;
+}
+
+.command-stack {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.copy-command {
+  display: grid;
+  width: 100%;
+  gap: 0.45rem;
+  border: 1px solid rgba(23, 27, 31, 0.16);
+  border-radius: 6px;
+  background: rgba(23, 27, 31, 0.04);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0.85rem;
+  text-align: left;
+}
+
+.copy-command:hover,
+.copy-command:focus-visible {
+  border-color: rgba(17, 106, 99, 0.5);
+  background: rgba(17, 106, 99, 0.08);
+}
+
+.copy-command span {
+  font-weight: 800;
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+}
+
+.copy-command code {
+  color: var(--teal-dark);
+  overflow-wrap: anywhere;
+}
+
+.launcher-note {
+  min-height: 1.6em;
+  font-size: 0.92rem;
+}
+
+.lab-link {
+  justify-self: start;
+}
+
+.grid-demo-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.compact-button {
+  min-height: 38px;
+  padding: 0.55rem 0.75rem;
+}
+
+.ai-grid {
+  display: grid;
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  gap: 4px;
+  align-self: center;
+  justify-self: center;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.ai-cell {
+  position: relative;
+  min-width: 0;
+  border: 1px solid rgba(23, 27, 31, 0.12);
+  border-radius: 6px;
+  background: rgba(23, 27, 31, 0.045);
+}
+
+.ai-cell.wall {
+  background:
+    linear-gradient(135deg, rgba(23, 27, 31, 0.2) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(23, 27, 31, 0.2) 25%, transparent 25%),
+    rgba(23, 27, 31, 0.09);
+  background-size: 12px 12px;
+}
+
+.ai-cell.path {
+  background: rgba(201, 150, 33, 0.18);
+}
+
+.ai-cell.start {
+  outline: 2px solid var(--sage);
+  outline-offset: -2px;
+}
+
+.ai-cell.goal {
+  outline: 2px solid var(--coral);
+  outline-offset: -2px;
+}
+
+.ai-cell.agent::after {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 5px rgba(17, 106, 99, 0.16);
+  content: "";
+}
+
+.grid-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.grid-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.grid-legend b {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 3px;
+}
+
+.legend-start {
+  background: var(--sage);
+}
+
+.legend-agent {
+  background: var(--teal);
+}
+
+.legend-goal {
+  background: var(--coral);
 }
 
 .skills-section {
@@ -644,6 +857,9 @@ h3 {
   }
 
   .project-grid,
+  .media-grid,
+  .media-card.wide,
+  .lab-layout,
   .skills-grid {
     grid-template-columns: 1fr;
   }
@@ -714,6 +930,19 @@ h3 {
 
   .button {
     width: 100%;
+  }
+
+  .nav-links {
+    gap: 0;
+  }
+
+  .nav-links a {
+    padding-inline: 0.38rem;
+  }
+
+  .grid-demo-header {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .contact-section {

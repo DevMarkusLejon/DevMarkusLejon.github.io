@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Spot policy demo poster</title>
+  <desc id="desc">A stylized robotics control diagram for a project video poster.</desc>
+  <rect width="1280" height="720" fill="#e9e3d6"/>
+  <path d="M0 600h1280" stroke="#171b1f" stroke-opacity=".18" stroke-width="2"/>
+  <g stroke="#116a63" stroke-opacity=".18" stroke-width="2">
+    <path d="M0 80h1280M0 160h1280M0 240h1280M0 320h1280M0 400h1280M0 480h1280M0 560h1280"/>
+    <path d="M120 0v720M240 0v720M360 0v720M480 0v720M600 0v720M720 0v720M840 0v720M960 0v720M1080 0v720M1200 0v720"/>
+  </g>
+  <g transform="translate(320 265)">
+    <rect x="155" y="60" width="320" height="145" rx="26" fill="#fffdf8" stroke="#171b1f" stroke-width="8"/>
+    <path d="M155 128h-100M475 128h115" stroke="#171b1f" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="55" cy="128" r="28" fill="#c99621" stroke="#171b1f" stroke-width="8"/>
+    <circle cx="590" cy="128" r="28" fill="#c99621" stroke="#171b1f" stroke-width="8"/>
+    <circle cx="225" cy="60" r="22" fill="#c84f3a"/>
+    <circle cx="405" cy="205" r="22" fill="#116a63"/>
+  </g>
+  <path d="M230 205C410 120 600 140 730 240s220 125 340 72" fill="none" stroke="#c84f3a" stroke-width="10" stroke-linecap="round"/>
+  <text x="70" y="105" fill="#171b1f" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800">Spot RL Policy Demo</text>
+  <text x="70" y="160" fill="#5f686f" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">Drop an MP4 into assets/videos/spot-rl-demo.mp4</text>
+</svg>

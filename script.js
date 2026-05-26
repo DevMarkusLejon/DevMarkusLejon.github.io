@@ -140,3 +140,90 @@
   media.addEventListener("change", start);
   start();
 })();
+
+(function () {
+  const copyStatus = document.getElementById("copyStatus");
+  const commandButtons = document.querySelectorAll("[data-command]");
+
+  commandButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const command = button.getAttribute("data-command") || "";
+
+      try {
+        await navigator.clipboard.writeText(command);
+        if (copyStatus) {
+          copyStatus.textContent = "Copied: " + command;
+        }
+      } catch (error) {
+        if (copyStatus) {
+          copyStatus.textContent = command;
+        }
+      }
+    });
+  });
+
+  const grid = document.getElementById("aiGrid");
+  const rerun = document.getElementById("rerunGridDemo");
+
+  if (!grid) {
+    return;
+  }
+
+  const size = 8;
+  const start = 0;
+  const goal = 63;
+  const walls = new Set([10, 11, 12, 18, 28, 29, 33, 34, 42, 44, 45, 52]);
+  const path = [0, 1, 2, 3, 4, 5, 13, 21, 22, 23, 31, 39, 47, 55, 63];
+  let step = 0;
+  let timer = 0;
+
+  function renderGrid() {
+    grid.innerHTML = "";
+
+    for (let index = 0; index < size * size; index += 1) {
+      const cell = document.createElement("span");
+      cell.className = "ai-cell";
+
+      if (walls.has(index)) {
+        cell.classList.add("wall");
+      }
+
+      if (path.indexOf(index) >= 0 && path.indexOf(index) <= step) {
+        cell.classList.add("path");
+      }
+
+      if (index === start) {
+        cell.classList.add("start");
+      }
+
+      if (index === goal) {
+        cell.classList.add("goal");
+      }
+
+      if (index === path[step]) {
+        cell.classList.add("agent");
+      }
+
+      grid.appendChild(cell);
+    }
+  }
+
+  function advance() {
+    step = (step + 1) % path.length;
+    renderGrid();
+    timer = window.setTimeout(advance, 420);
+  }
+
+  function restart() {
+    window.clearTimeout(timer);
+    step = 0;
+    renderGrid();
+    timer = window.setTimeout(advance, 620);
+  }
+
+  if (rerun) {
+    rerun.addEventListener("click", restart);
+  }
+
+  restart();
+})();

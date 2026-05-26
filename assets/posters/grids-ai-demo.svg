@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Grids AI demo poster</title>
+  <desc id="desc">A stylized grid-world game poster with an agent path.</desc>
+  <rect width="1280" height="720" fill="#fffdf8"/>
+  <rect x="80" y="80" width="560" height="560" rx="18" fill="#e9e3d6" stroke="#171b1f" stroke-opacity=".2" stroke-width="3"/>
+  <g fill="none" stroke="#171b1f" stroke-opacity=".14" stroke-width="3">
+    <path d="M150 80v560M220 80v560M290 80v560M360 80v560M430 80v560M500 80v560M570 80v560"/>
+    <path d="M80 150h560M80 220h560M80 290h560M80 360h560M80 430h560M80 500h560M80 570h560"/>
+  </g>
+  <g fill="#171b1f" fill-opacity=".18">
+    <rect x="220" y="150" width="70" height="70"/>
+    <rect x="290" y="150" width="70" height="70"/>
+    <rect x="360" y="220" width="70" height="70"/>
+    <rect x="150" y="360" width="70" height="70"/>
+    <rect x="430" y="430" width="70" height="70"/>
+  </g>
+  <path d="M115 115h210v140h140v140h70v140" fill="none" stroke="#c99621" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="115" cy="115" r="30" fill="#116a63"/>
+  <circle cx="535" cy="535" r="34" fill="#c84f3a"/>
+  <text x="710" y="250" fill="#171b1f" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">Grids AI Runs</text>
+  <text x="710" y="320" fill="#5f686f" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Drop an MP4 into assets/videos/grids-ai-demo.mp4</text>
+</svg>

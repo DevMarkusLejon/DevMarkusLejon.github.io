@@ -22,6 +22,8 @@
         </a>
         <div class="nav-links" aria-label="Sections">
           <a href="#projects">Projects</a>
+          <a href="#media">Videos</a>
+          <a href="#ai-lab">AI Lab</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
         </div>
@@ -149,6 +151,118 @@
                 <li>Kinematics</li>
                 <li>Calibration</li>
               </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="media" class="section media-section" aria-labelledby="media-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Project Media</p>
+          <h2 id="media-title">Video demos</h2>
+        </div>
+
+        <div class="media-grid">
+          <article class="media-card wide">
+            <video class="project-video" controls preload="metadata" poster="assets/posters/spot-rl-demo.svg">
+              <source src="assets/videos/spot-rl-demo.mp4" type="video/mp4">
+            </video>
+            <div class="media-content">
+              <p class="project-kicker">Robotics Demo</p>
+              <h3>Spot loco-manipulation policy</h3>
+              <p>
+                A dedicated slot for thesis footage, simulation rollouts, or hardware clips showing the
+                policy loop from perception through control.
+              </p>
+            </div>
+          </article>
+
+          <article class="media-card">
+            <video class="project-video" controls preload="metadata" poster="assets/posters/grids-ai-demo.png">
+              <source src="assets/videos/grids-ai-demo.mp4" type="video/mp4">
+            </video>
+            <div class="media-content">
+              <p class="project-kicker">AI Game</p>
+              <h3>Grids AI project runs</h3>
+              <p>
+                Use this slot for screen recordings of agents planning, training, or competing inside the
+                grid-based Python game projects.
+              </p>
+            </div>
+          </article>
+
+          <article class="media-card">
+            <video class="project-video" controls preload="metadata" poster="assets/posters/chess-robot-demo.svg">
+              <source src="assets/videos/chess-robot-demo.mp4" type="video/mp4">
+            </video>
+            <div class="media-content">
+              <p class="project-kicker">Manipulation</p>
+              <h3>UR5e chess robot execution</h3>
+              <p>
+                A compact place for calibration, move planning, and physical execution footage once the
+                final clips are exported.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="ai-lab" class="section ai-lab-section" aria-labelledby="ai-lab-title">
+        <div class="section-heading compact">
+          <p class="eyebrow">Runnable Work</p>
+          <h2 id="ai-lab-title">Python AI game lab</h2>
+        </div>
+
+        <div class="lab-layout">
+          <article class="launcher-panel" aria-labelledby="launcher-title">
+            <div>
+              <p class="project-kicker">Local Launcher</p>
+              <h3 id="launcher-title">Run sibling Python game repos</h3>
+              <p>
+                GitHub Pages is static, so Python games run locally through the helper script. The launcher
+                targets the sibling <code>Grids_ai_python</code> repo and can run the terminal match,
+                AI spectator mode, strongest-model play, or the static browser game server.
+              </p>
+            </div>
+            <div class="command-stack" aria-label="Launcher commands">
+              <button class="copy-command" type="button" data-command="python tools/run_project.py --list">
+                <span>List detected games</span>
+                <code>python tools/run_project.py --list</code>
+              </button>
+              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode web">
+                <span>Serve browser game</span>
+                <code>python tools/run_project.py --project grids_ai --mode web</code>
+              </button>
+              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode terminal">
+                <span>Play terminal match</span>
+                <code>python tools/run_project.py --project grids_ai --mode terminal</code>
+              </button>
+              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode watch">
+                <span>Watch AI vs AI</span>
+                <code>python tools/run_project.py --project grids_ai --mode watch</code>
+              </button>
+            </div>
+            <a class="button secondary lab-link" href="http://127.0.0.1:8765/web/" target="_blank" rel="noreferrer">
+              Open browser game
+            </a>
+            <p class="launcher-note" id="copyStatus" aria-live="polite">
+              Start web mode, then open http://127.0.0.1:8765/web/.
+            </p>
+          </article>
+
+          <article class="grid-demo" aria-labelledby="grid-demo-title">
+            <div class="grid-demo-header">
+              <div>
+                <p class="project-kicker">Browser Preview</p>
+                <h3 id="grid-demo-title">Policy pathfinder</h3>
+              </div>
+              <button class="button secondary compact-button" id="rerunGridDemo" type="button">Rerun</button>
+            </div>
+            <div class="ai-grid" id="aiGrid" aria-label="Animated grid policy demo"></div>
+            <div class="grid-legend" aria-hidden="true">
+              <span><b class="legend-start"></b>Start</span>
+              <span><b class="legend-agent"></b>Agent</span>
+              <span><b class="legend-goal"></b>Goal</span>
             </div>
           </article>
         </div>
