@@ -630,6 +630,12 @@ code {
   justify-self: start;
 }
 
+.project-documents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
 .grid-demo-header {
   display: flex;
   align-items: start;
