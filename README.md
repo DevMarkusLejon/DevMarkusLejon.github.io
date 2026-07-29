@@ -12,6 +12,7 @@ Site URL: `https://DevMarkusLejon.github.io/`
 - `script.js` - small canvas animation and footer year
 - `assets/posters/` - poster art for project video slots
 - `assets/videos/` - place exported project videos here
+- `assets/documents/` - downloadable project reports and summaries
 - `tools/run_project.py` - local Python launcher for sibling project repos
 - `.nojekyll` - tells GitHub Pages to serve the site as plain static files
 

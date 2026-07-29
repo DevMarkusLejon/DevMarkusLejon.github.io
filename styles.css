@@ -625,7 +625,8 @@ code {
   font-size: 0.92rem;
 }
 
-.lab-link {
+.lab-link,
+.project-document {
   justify-self: start;
 }
 
