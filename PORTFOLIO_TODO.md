@@ -1,6 +1,10 @@
 # Portfolio implementation checklist
 
-Updated **2026-10-04**. The robotics-field-notebook redesign is ready for the authorized GitHub Pages release. Deployment and live-URL verification are in progress.
+Updated **2026-10-04**. The robotics-field-notebook redesign is committed, pushed, and live at [devmarkuslejon.github.io](https://devmarkuslejon.github.io/).
+
+Release `aa28a7d` passed GitHub Pages deployment and Portfolio Checks. Live verification:
+17 URLs returned 200 with matching release contents; both pages passed 320/375/390/768/1440 px
+layout checks, both videos played, and keyboard/reduced-motion/no-JavaScript checks passed.
 
 ## Immediate recruiter-facing fixes
 
@@ -25,7 +29,7 @@ Updated **2026-10-04**. The robotics-field-notebook redesign is ready for the au
 - [x] Canonical/Open Graph/Twitter metadata, Person/CreativeWork structured data, SVG favicon, robots.txt, sitemap.xml, local-link checker, and a non-deploying GitHub Actions check.
 - [x] Essential content/navigation works without JavaScript or remote fonts. No autoplay; reduced-motion styles; video pauses when the page is hidden.
 - [x] Browser validation: root and case page have no horizontal overflow at 320/375/390/768/1440 px. Local assets/fragments pass. Hardware video plays; no browser JS errors observed.
-- [ ] Release authorized: reconcile Git history, commit/push the portfolio, and verify the actual published pages, PDFs, media, and metadata. ReLion's separate untracked work stays local; its footer link is removed until that microsite has its own authorized release.
+- [x] Reconcile the existing remote thesis commits, commit/push the portfolio, and verify the actual published pages, PDFs, media, and metadata. ReLion's separate untracked work stays local; its footer link is removed until that microsite has its own authorized release.
 
 ## Optional later improvements
 
