@@ -1,345 +1,111 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Portfolio for Markus Lejon, an engineering physics graduate focused on robotics, edge AI, computer vision, and autonomous systems.">
-    <meta name="theme-color" content="#f6f4ef">
-    <title>Markus Lejon | Edge AI & Robotics</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Markus Lejon — Engineering Physics graduate focused on robotics and embedded AI, available immediately. Spot reinforcement learning, UR5e network integration, and Python experiments.">
+  <meta name="theme-color" content="#f5f3ec">
+  <link rel="canonical" href="https://devmarkuslejon.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Markus Lejon | Robotics & Embedded AI">
+  <meta property="og:description" content="From simulation to real robots. Projects, experiments, and the engineering behind them.">
+  <meta property="og:url" content="https://devmarkuslejon.github.io/">
+  <meta property="og:image" content="https://devmarkuslejon.github.io/assets/images/social-card.jpg">
+  <meta property="og:image:alt" content="Markus Lejon's robotics portfolio, featuring Spot in the lab.">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Markus Lejon | Robotics & Embedded AI</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Markus Lejon","url":"https://devmarkuslejon.github.io/","sameAs":["https://github.com/DevMarkusLejon","https://www.linkedin.com/in/markus-lejon/"],"knowsAbout":["Robotics","Reinforcement learning","Python","Computer vision","Linux"]}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><nav class="nav-shell wrap" aria-label="Primary navigation">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">ML<span>.</span></span><span>Markus Lejon</span></a>
+    <div class="nav-links"><a href="#projects">Work</a><a href="#about">About</a><a class="nav-contact" href="#contact">Let's talk ↗</a></div>
+  </nav></header>
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Robotics / Embedded AI</p>
+        <h1 id="hero-title">From simulation<br> to <em>real robots.</em></h1>
+        <p class="hero-lede">I'm Markus, an Engineering Physics graduate focused on robotics and embedded AI. I connect learning systems, perception, and real hardware.</p>
+        <div class="hero-actions"><a class="button primary" href="#projects">Explore my work ↘</a><a class="text-link" href="assets/documents/markus-lejon-cv-2026.pdf" download>Download CV ↓</a><a class="text-link" href="mailto:markus.lejon99@hotmail.com">Get in touch ↗</a></div>
+        <p class="hero-location"><strong>Available to start immediately</strong><br> Malmö / Lund / Greater Copenhagen</p>
+      </div>
+      <figure class="hero-image">
+        <picture><source srcset="assets/images/spot-lab-small.webp 800w, assets/images/spot-lab.webp 1600w" sizes="(max-width: 760px) calc(100vw - 40px), 50vw" type="image/webp"><img src="assets/images/spot-lab.webp" alt="Boston Dynamics Spot with its arm unstowed in the robotics lab." width="1600" height="1205" fetchpriority="high"></picture>
+        <div class="image-corner" aria-hidden="true">FIELD NOTES / 01</div>
+        <figcaption><span>Spot / LTH robotics lab</span><a href="projects/spot.html">Inside the thesis ↗</a></figcaption>
+      </figure>
+    </section>
+    <div class="stack-strip wrap" aria-label="Core technologies"><span>Tools I work with</span><p>Python <b>/</b> PyTorch <b>/</b> Isaac Lab <b>/</b> Spot SDK <b>/</b> Linux</p></div>
 
-    <header class="site-header" aria-label="Primary navigation">
-      <nav class="nav-shell">
-        <a class="brand" href="#top" aria-label="Markus Lejon home">
-          <span class="brand-mark" aria-hidden="true">ML</span>
-          <span>Markus Lejon</span>
-        </a>
-        <div class="nav-links" aria-label="Sections">
-          <a href="#projects">Projects</a>
-          <a href="#media">Videos</a>
-          <a href="#ai-lab">AI Lab</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact">Contact</a>
+    <section class="section wrap" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / Selected work</p><h2 id="projects-title">Built. Tested.<br> <span class="muted">Still exploring.</span></h2></div><p>Real hardware, honest experiments,<br> and source you can inspect.</p></div>
+      <article class="project-feature">
+        <div class="feature-media">
+          <video controls playsinline preload="none" poster="assets/images/spot-deployment.webp" width="854" height="480" aria-label="Supervised Spot locomotion test with an overhead safety tether">
+            <source src="assets/videos/spot-deployment.mp4" type="video/mp4">
+            <p>Your browser cannot play this video. <a href="assets/videos/spot-deployment.mp4">Download the Spot experiment clip</a>.</p>
+          </video>
+          <p class="media-caption">Real hardware · supervised locomotion test · safety tether attached</p>
         </div>
-      </nav>
-    </header>
-
-    <main id="main">
-      <section id="top" class="hero" aria-labelledby="hero-title">
-        <canvas id="systemCanvas" class="system-canvas" aria-hidden="true"></canvas>
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Malmo / Lund / Copenhagen</p>
-            <h1 id="hero-title">Edge AI & Robotics Engineer</h1>
-            <p class="hero-lede">
-              Engineering Physics MSc candidate at LTH building learning-based robotic systems, from
-              GPU-parallel simulation to perception, decision-making, and control on real platforms.
-            </p>
-            <div class="hero-actions" aria-label="Primary actions">
-              <a class="button primary" href="#projects">View projects</a>
-              <a class="button secondary" href="mailto:markus.lejon99@hotmail.com">Email me</a>
-            </div>
+        <div class="feature-copy">
+          <p class="project-kicker">01 / Master's thesis · 2026</p><h3>Learning to control<br> Boston Dynamics Spot.</h3>
+          <p>Reinforcement learning from Isaac Lab simulation to standing and locomotion policies on a physical robot.</p>
+          <dl class="project-facts"><div><dt>My work</dt><dd>Co-developed training environments, policy evaluation, deployment integration, and hardware-log analysis with Fredrik Sundt.</dd></div><div><dt>Evidence</dt><dd>Hardware footage, trained policies, experiment logs, and the full thesis. Locomotion tests used a safety harness.</dd></div></dl>
+          <ul class="tag-list" aria-label="Spot technologies"><li>Python</li><li>Isaac Lab</li><li>PyTorch</li><li>Spot SDK</li></ul>
+          <div class="project-actions"><a class="button primary" href="projects/spot.html">Read case study ↗</a><a class="text-link" href="https://github.com/DevMarkusLejon/RLonSpot">Source code ↗</a></div>
+        </div>
+      </article>
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="collaboration-media">
+            <video controls playsinline preload="none" poster="assets/images/robotlab-network-demo.webp" width="1280" height="706" aria-label="UR5e tic-tac-toe collaboration demo: game interface, physical robot camera views, and digital twin">
+              <source src="assets/videos/robotlab-network-demo.mp4" type="video/mp4">
+              <p>Your browser cannot play this video. <a href="assets/videos/robotlab-network-demo.mp4">Download the edited RobotLab demo</a>.</p>
+            </video>
+            <p class="media-caption">Physical UR5e + team digital twin · Ericsson network demo · edited, silent</p>
           </div>
+          <div class="project-content">
+            <p class="project-kicker">02 / LTH RobotLab × Ericsson · Sep–Oct 2026</p><h3>A robot. A game.<br> A network in between.</h3>
+            <p>My focus: MQTT command validation, status reporting and fault handling, calibrated UR5e motion, and game-piece state tracking.</p>
+            <details><summary>Contribution & demo context</summary><div class="detail-copy"><p>This collaborative tic-tac-toe demo operated a physical UR5e over Ericsson's network. The recording shows the game interface, physical camera views, and the team's digital twin together. It is demo evidence, not a latency or reliability benchmark.</p><p>I also contributed to a RealSense board-perception prototype and WebRTC camera streaming. The interface, digital twin, and communication work are team contributions, not claimed as solely mine.</p><p>The separate public prototype explores MediaPipe pointing input and ROS 2 / MoveIt / Gazebo workflows offline. Its simulated behavior is distinct from the physical collaboration footage above.</p></div></details>
+            <ul class="tag-list" aria-label="RobotLab focus"><li>MQTT</li><li>UR5e</li><li>RealSense</li><li>WebRTC</li></ul>
+            <div class="project-actions"><a class="text-link" href="https://www.youtube.com/watch?v=WnL8DfprDFw&amp;list=PLCaqj4_wJsvk">YouTube demo ↗</a><a class="text-link" href="https://github.com/DevMarkusLejon/robotlab-demo">Separate offline prototype ↗</a></div>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="game-visual"><img src="assets/posters/grids-ai-demo.png" alt="Grids tactical game: a ten-column, seven-row board with blue and red commanders." width="738" height="910" loading="lazy"><span class="image-label">ACTUAL GAME / 10 × 7</span></div>
+          <div class="project-content">
+            <p class="project-kicker">03 / Python & applied AI</p><h3>Grids: a small game.<br> A whole experiment loop.</h3>
+            <p>A tactical game with self-play, policy/value model experiments, browser play, and an evaluation-backed model registry.</p>
+            <details><summary>What makes it engineering?</summary><div class="detail-copy"><p>A headless Python engine supports repeatable matches. Training and evaluation workflows separate holdout results, seeded benchmarks, and experimental model rankings.</p><p>The browser board is the actual 10 × 7 game—not a decorative path animation. The repository includes local run instructions and a model dashboard; no unavailable hosted demo is advertised here.</p></div></details>
+            <ul class="tag-list" aria-label="Grids technologies"><li>Python</li><li>PyTorch</li><li>Self-play</li><li>Evaluation</li></ul>
+            <a class="text-link" href="https://github.com/DevMarkusLejon/Grids_ai_python">Explore code & run instructions ↗</a>
+          </div>
+        </article>
+      </div>
+      <aside class="other-work"><p class="eyebrow">Also on the workbench</p><div><h3>Physics before hardware.</h3><p>Beer Pong Robot models ball trajectories, shot search, and seeded Monte Carlo experiments. Hardware calibration and embedded control are future stages.</p><a class="text-link" href="https://github.com/DevMarkusLejon/beerpong-robot">Explore the modelling project ↗</a><details><summary>Earlier robotics coursework</summary><div class="detail-copy"><p>Chess-piece perception and pick-and-place: YOLO, RealSense deprojection, and robot motion workflows. Not presented as a validated fully autonomous chess system.</p><a class="text-link" href="https://github.com/DevMarkusLejon/FRTN85_group8MarkusCook">Inspect the coursework source ↗</a></div></details></div></aside>
+    </section>
 
-          <aside class="signal-panel" aria-label="Technical profile">
-            <div class="signal-header">
-              <span>Current Focus</span>
-              <span class="status-pill">Available 2026</span>
-            </div>
-            <dl class="signal-list">
-              <div>
-                <dt>Autonomy</dt>
-                <dd>RL policies, behavior trees, robotic manipulation</dd>
-              </div>
-              <div>
-                <dt>Edge AI</dt>
-                <dd>Computer vision, embedded ML, performance constraints</dd>
-              </div>
-              <div>
-                <dt>Stack</dt>
-                <dd>Python, C++, PyTorch, ROS2, Isaac Sim, Linux</dd>
-              </div>
-            </dl>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section intro-section" aria-labelledby="intro-title">
-        <div class="section-heading">
-          <p class="eyebrow">Profile</p>
-          <h2 id="intro-title">I connect physical systems with production-minded software.</h2>
-        </div>
-        <div class="intro-copy">
-          <p>
-            My background combines engineering physics, robotics, control, and applied AI. I enjoy
-            work where models have to survive contact with hardware, real data, and system constraints.
-          </p>
-          <p>
-            I am looking for roles in Skane or Greater Copenhagen across robotics ML, embedded AI,
-            computer vision, autonomy, and technical software engineering.
-          </p>
-        </div>
-      </section>
-
-      <section id="projects" class="section" aria-labelledby="projects-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Selected Work</p>
-          <h2 id="projects-title">Projects</h2>
-        </div>
-
-        <div class="project-grid">
-          <article class="project-card featured">
-            <div class="project-visual" aria-hidden="true">
-              <div class="robot-core">
-                <span class="joint joint-a"></span>
-                <span class="joint joint-b"></span>
-                <span class="joint joint-c"></span>
-                <span class="joint joint-d"></span>
-              </div>
-              <div class="trace trace-a"></div>
-              <div class="trace trace-b"></div>
-              <div class="trace trace-c"></div>
-            </div>
-            <div class="project-content">
-              <p class="project-kicker">Master's Thesis</p>
-              <h3>RL-Based Robotic Manipulation on Boston Dynamics Spot</h3>
-              <p>
-                Developed reinforcement learning policies for loco-manipulation tasks such as door
-                opening and traversal, with GPU-parallel training environments in Isaac Sim and Isaac Lab.
-              </p>
-              <ul class="tag-list" aria-label="Technologies">
-                <li>Reinforcement Learning</li>
-                <li>Isaac Sim</li>
-                <li>Isaac Lab</li>
-                <li>Sim-to-real</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-content">
-              <p class="project-kicker">Autonomy System</p>
-              <h3>Behavior Tree Control for Autonomous Spot Tasks</h3>
-              <p>
-                Designed a behavior-tree pipeline for detection, approach, manipulation, and delivery,
-                integrating vision-based perception with task-level control.
-              </p>
-              <ul class="tag-list" aria-label="Technologies">
-                <li>ROS2</li>
-                <li>Behavior Trees</li>
-                <li>Computer Vision</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-content">
-              <p class="project-kicker">Manipulation</p>
-              <h3>UR5e Chess Robot</h3>
-              <p>
-                Built a robotic manipulation workflow using kinematics, calibration, and motion planning
-                for reliable physical execution.
-              </p>
-              <ul class="tag-list" aria-label="Technologies">
-                <li>Motion Planning</li>
-                <li>Kinematics</li>
-                <li>Calibration</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="media" class="section media-section" aria-labelledby="media-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Project Media</p>
-          <h2 id="media-title">Video demos</h2>
-        </div>
-
-        <div class="media-grid">
-          <article class="media-card wide">
-            <video class="project-video" controls preload="metadata" poster="assets/posters/spot-rl-demo.svg">
-              <source src="assets/videos/spot-rl-demo.mp4" type="video/mp4">
-            </video>
-            <div class="media-content">
-              <p class="project-kicker">Robotics Demo</p>
-              <h3>Spot loco-manipulation policy</h3>
-              <p>
-                A dedicated slot for thesis footage, simulation rollouts, or hardware clips showing the
-                policy loop from perception through control.
-              </p>
-            </div>
-          </article>
-
-          <article class="media-card">
-            <video class="project-video" controls preload="metadata" poster="assets/posters/grids-ai-demo.png">
-              <source src="assets/videos/grids-ai-demo.mp4" type="video/mp4">
-            </video>
-            <div class="media-content">
-              <p class="project-kicker">AI Game</p>
-              <h3>Grids AI project runs</h3>
-              <p>
-                Use this slot for screen recordings of agents planning, training, or competing inside the
-                grid-based Python game projects.
-              </p>
-            </div>
-          </article>
-
-          <article class="media-card">
-            <video class="project-video" controls preload="metadata" poster="assets/posters/chess-robot-demo.svg">
-              <source src="assets/videos/chess-robot-demo.mp4" type="video/mp4">
-            </video>
-            <div class="media-content">
-              <p class="project-kicker">Manipulation</p>
-              <h3>UR5e chess robot execution</h3>
-              <p>
-                A compact place for calibration, move planning, and physical execution footage once the
-                final clips are exported.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="ai-lab" class="section ai-lab-section" aria-labelledby="ai-lab-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Runnable Work</p>
-          <h2 id="ai-lab-title">Python AI game lab</h2>
-        </div>
-
-        <div class="lab-layout">
-          <article class="launcher-panel" aria-labelledby="launcher-title">
-            <div>
-              <p class="project-kicker">Local Launcher</p>
-              <h3 id="launcher-title">Run sibling Python game repos</h3>
-              <p>
-                GitHub Pages is static, so Python games run locally through the helper script. The launcher
-                targets the sibling <code>Grids_ai_python</code> repo and can run the terminal match,
-                AI spectator mode, strongest-model play, or the static browser game server.
-              </p>
-            </div>
-            <div class="command-stack" aria-label="Launcher commands">
-              <button class="copy-command" type="button" data-command="python tools/run_project.py --list">
-                <span>List detected games</span>
-                <code>python tools/run_project.py --list</code>
-              </button>
-              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode web">
-                <span>Serve browser game</span>
-                <code>python tools/run_project.py --project grids_ai --mode web</code>
-              </button>
-              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode terminal">
-                <span>Play terminal match</span>
-                <code>python tools/run_project.py --project grids_ai --mode terminal</code>
-              </button>
-              <button class="copy-command" type="button" data-command="python tools/run_project.py --project grids_ai --mode watch">
-                <span>Watch AI vs AI</span>
-                <code>python tools/run_project.py --project grids_ai --mode watch</code>
-              </button>
-            </div>
-            <a class="button secondary lab-link" href="http://127.0.0.1:8765/web/" target="_blank" rel="noreferrer">
-              Open browser game
-            </a>
-            <p class="launcher-note" id="copyStatus" aria-live="polite">
-              Start web mode, then open http://127.0.0.1:8765/web/.
-            </p>
-          </article>
-
-          <article class="grid-demo" aria-labelledby="grid-demo-title">
-            <div class="grid-demo-header">
-              <div>
-                <p class="project-kicker">Browser Preview</p>
-                <h3 id="grid-demo-title">Policy pathfinder</h3>
-              </div>
-              <button class="button secondary compact-button" id="rerunGridDemo" type="button">Rerun</button>
-            </div>
-            <div class="ai-grid" id="aiGrid" aria-label="Animated grid policy demo"></div>
-            <div class="grid-legend" aria-hidden="true">
-              <span><b class="legend-start"></b>Start</span>
-              <span><b class="legend-agent"></b>Agent</span>
-              <span><b class="legend-goal"></b>Goal</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="skills" class="section skills-section" aria-labelledby="skills-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Capabilities</p>
-          <h2 id="skills-title">Technical Skills</h2>
-        </div>
-        <div class="skills-grid">
-          <section class="skill-block" aria-labelledby="skills-languages">
-            <h3 id="skills-languages">Languages</h3>
-            <p>Python, C++, C#, Java</p>
-          </section>
-          <section class="skill-block" aria-labelledby="skills-ai">
-            <h3 id="skills-ai">AI / ML</h3>
-            <p>Reinforcement learning, PyTorch, computer vision, model evaluation</p>
-          </section>
-          <section class="skill-block" aria-labelledby="skills-robotics">
-            <h3 id="skills-robotics">Robotics</h3>
-            <p>ROS2, behavior trees, kinematics, sensors, planning, system integration</p>
-          </section>
-          <section class="skill-block" aria-labelledby="skills-systems">
-            <h3 id="skills-systems">Systems</h3>
-            <p>Linux, GPU workflows, embedded constraints, real-time performance thinking</p>
-          </section>
-        </div>
-      </section>
-
-      <section class="section experience-section" aria-labelledby="experience-title">
-        <div class="section-heading compact">
-          <p class="eyebrow">Experience</p>
-          <h2 id="experience-title">Recent Work</h2>
-        </div>
-        <div class="timeline">
-          <article class="timeline-item">
-            <div class="timeline-date">2023-2025</div>
-            <div>
-              <h3>Tetra Pak, Lund | Technical Service Consultant</h3>
-              <p>
-                Worked in an automated Miniload warehouse environment requiring precision, process
-                discipline, and consistent execution under strict quality expectations.
-              </p>
-            </div>
-          </article>
-          <article class="timeline-item">
-            <div class="timeline-date">2019-2026</div>
-            <div>
-              <h3>Lund University, LTH | MSc Engineering Physics</h3>
-              <p>
-                Specialization in AI, robotics, and control, supported by a broad foundation in
-                mathematics, physics, and technical software development.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="contact" class="contact-section" aria-labelledby="contact-title">
-        <div class="contact-copy">
-          <p class="eyebrow">Contact</p>
-          <h2 id="contact-title">Let's talk about robotics, edge AI, or technical software roles.</h2>
-        </div>
-        <div class="contact-actions">
-          <a class="button primary" href="mailto:markus.lejon99@hotmail.com">markus.lejon99@hotmail.com</a>
-          <a class="button secondary" href="https://www.linkedin.com/in/markus-lejon/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a class="button secondary" href="https://github.com/DevMarkusLejon" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <span>&copy; <span id="year"></span> Markus Lejon</span>
-      <a href="#top">Back to top</a>
-    </footer>
-
-    <script src="script.js"></script>
-  </body>
+    <section class="about-section" id="about" aria-labelledby="about-title"><div class="wrap about-grid">
+      <div><p class="eyebrow">02 / Background</p><h2 id="about-title">Physics-trained.<br> Software-minded.</h2><p class="about-lede">I like the point where an elegant model has to deal with sensors, timing, and a real machine.</p><p>I'm an M.Sc. Engineering Physics graduate from Lund University, LTH, specializing in AI, robotics, and control. My Spot master's thesis was completed and approved in 2026.</p><p>My primary targets are robotics and embedded AI roles. I'm available to start immediately, with a focus on Skåne and Greater Copenhagen.</p></div>
+      <div class="background-notes">
+        <section><p class="note-label">Engineering toolkit</p><h3>From experiments to integration</h3><p>Python · C++ · PyTorch · computer vision · ROS 2 · Isaac Sim / Lab · Linux · Docker</p><p class="small muted">Project evidence above is strongest in Python, learning systems, simulation, and robot deployment.</p></section>
+        <section><p class="note-label">2023–2026 / Tetra Pak, Lund</p><h3>Technical Service Consultant</h3><p>Four summers in the outbound technical service team, working with the Miniload order-picking system. The work required attention to detail and consistent adherence to quality procedures.</p></section>
+        <section><p class="note-label">How I work</p><h3>Make experiments inspectable.</h3><p>Keep source, logs, assumptions, and limitations together. Separate what worked in simulation from what was actually tested on hardware.</p></section>
+      </div>
+    </div></section>
+    <section class="contact-section wrap" id="contact" aria-labelledby="contact-title">
+      <p class="eyebrow">03 / Next conversation</p>
+      <div class="contact-grid"><div><h2 id="contact-title">Building something<br> that <em>moves?</em></h2><p>Robotics and embedded AI are my main focus.<br> Available to start immediately.</p></div><div class="contact-actions"><a class="button primary" href="mailto:markus.lejon99@hotmail.com">Email Markus ↗</a><a href="mailto:markus.lejon99@hotmail.com" class="contact-email">markus.lejon99@hotmail.com</a><a class="text-link" href="assets/documents/markus-lejon-cv-2026.pdf" download>Download CV (PDF) ↓</a><div class="social-links"><a class="text-link" href="https://www.linkedin.com/in/markus-lejon/">LinkedIn ↗</a><a class="text-link" href="https://github.com/DevMarkusLejon">GitHub ↗</a></div></div></div>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><span>© <span id="year">2026</span> Markus Lejon</span><a href="#top">Back to top ↑</a></footer>
+  <script src="script.js" defer></script>
+</body>
 </html>

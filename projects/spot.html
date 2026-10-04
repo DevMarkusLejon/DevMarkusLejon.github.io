@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Markus Lejon and Fredrik Sundt's 2026 Spot RL thesis: standing and locomotion from Isaac Lab to hardware, with measured results and transfer limitations.">
+  <meta name="theme-color" content="#f5f3ec">
+  <link rel="canonical" href="https://devmarkuslejon.github.io/projects/spot.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Learning to control Spot | Markus Lejon">
+  <meta property="og:description" content="Standing and locomotion, from Isaac Lab to hardware. An inspectable 2026 robotics thesis.">
+  <meta property="og:url" content="https://devmarkuslejon.github.io/projects/spot.html">
+  <meta property="og:image" content="https://devmarkuslejon.github.io/assets/images/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Learning to control Spot | Markus Lejon</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CreativeWork","name":"Reinforcement Learning — From Simulation to Deployment on the Robot Platform Spot","datePublished":"2026","author":[{"@type":"Person","name":"Markus Lejon"},{"@type":"Person","name":"Fredrik Sundt"}],"url":"https://devmarkuslejon.github.io/projects/spot.html","encoding":{"@type":"MediaObject","contentUrl":"https://devmarkuslejon.github.io/assets/documents/spot-rl-master-thesis.pdf","encodingFormat":"application/pdf"}}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><nav class="nav-shell wrap" aria-label="Primary navigation">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">ML<span>.</span></span><span>Markus Lejon</span></a>
+    <div class="nav-links"><a href="../index.html#projects">Work</a><a href="../index.html#contact">Let's talk ↗</a></div>
+  </nav></header>
+  <main id="main" class="wrap">
+    <section class="case-header" aria-labelledby="case-title">
+      <a class="text-link" href="../index.html#projects">← All projects</a>
+      <p class="eyebrow">Field notes / 01 · Master's thesis · LTH · 2026</p>
+      <h1 id="case-title">Learning in simulation.<br> <em>Deploying on Spot.</em></h1>
+      <p class="hero-lede">A reinforcement-learning pipeline for standing and command-following locomotion—with real hardware tests, logged limitations, and the source behind the results.</p>
+      <div class="hero-actions"><a class="button primary" href="../assets/documents/spot-rl-master-thesis.pdf">Read full thesis (PDF, 5.2 MB) ↗</a><a class="text-link" href="https://github.com/DevMarkusLejon/RLonSpot">Explore code & data ↗</a></div>
+      <ul class="tag-list" aria-label="Project technologies"><li>Python 3.10</li><li>Isaac Lab / Sim</li><li>PyTorch</li><li>Spot SDK</li><li>Jetson AGX Orin</li><li>Linux / Docker</li></ul>
+    </section>
+    <section class="case-layout" aria-labelledby="contribution-title">
+      <div><p class="eyebrow">01 / Contribution</p><h2 id="contribution-title">A shared thesis.<br> An end-to-end pipeline.</h2></div>
+      <div class="case-body"><p>Co-authored with <strong>Fredrik Sundt</strong>. We shared the work equally across simulation/reward design, policy evaluation, deployment adapted for Spot's arm, and hardware-log analysis. This is team work, not a claim of sole authorship.</p><p>The implementation builds on NVIDIA's Isaac Lab tools and Boston Dynamics' Spot RL example. The repository identifies these dependencies and includes setup documentation, policies, training/deployment logs, and plotting code.</p><div class="case-pipeline" aria-label="Deployment pipeline"><div><span>01 / TRAIN</span><h3>Isaac Lab</h3><p>Parallel simulation, rewards, standing and locomotion policy experiments.</p></div><div><span>02 / TRANSFER</span><h3>Exported policy</h3><p>Deployment integration and robot-specific observation/control handling.</p></div><div><span>03 / TEST</span><h3>Jetson → Spot</h3><p>Onboard inference, supervised hardware tests, and log analysis.</p></div></div></div>
+    </section>
+    <section class="case-layout" aria-labelledby="results-title">
+      <div><p class="eyebrow">02 / Results</p><h2 id="results-title">Strong simulation.<br> Qualified transfer.</h2></div>
+      <div class="case-body">
+        <p>The warm-start standing policy improved success over the NVIDIA baseline in the thesis evaluation. These are <strong>simulation success rates</strong>, not real-robot reliability numbers.</p>
+        <table class="results-table"><caption>Standing-policy evaluation · thesis Tables 4.1–4.2, p. 41. Counts are simulated tasks in each suite.</caption><thead><tr><th scope="col">Suite</th><th scope="col">Tasks</th><th scope="col">Baseline</th><th scope="col">Warm-start</th></tr></thead><tbody><tr><th scope="row">Normal</th><td>15,872</td><td>97.3%</td><td>100.0%</td></tr><tr><th scope="row">Stress</th><td>64,512</td><td>93.4%</td><td>95.0%</td></tr></tbody></table>
+        <p>On hardware, we deployed standing and locomotion, including multi-direction steps and continuous walking. The locomotion tests retained an overhead safety harness. They demonstrate deployment, but do not validate unrestricted robustness or a hardware success rate.</p>
+        <figure><video controls playsinline preload="none" poster="../assets/images/spot-deployment.webp" width="854" height="480" aria-label="Supervised locomotion deployment test with an overhead safety tether"><source src="../assets/videos/spot-deployment.mp4" type="video/mp4"><p><a href="../assets/videos/spot-deployment.mp4">Download the hardware clip</a>.</p></video><figcaption>Supervised locomotion deployment test with an overhead safety tether. A 20-second excerpt from the repository's diverse-locomotion experiment; no simulation footage is mixed in. <a href="https://github.com/DevMarkusLejon/RLonSpot/blob/main/media/videos/finetune_diverse_locomotion.mp4">Original clip ↗</a></figcaption></figure>
+        <figure><img src="../assets/images/spot-hardware-log.png" alt="Standing hardware experiment plots measured versus policy-target leg angles and base velocity over time, with visible knee-tracking offset." width="1600" height="1067" loading="lazy"><figcaption>Standing-policy hardware log under external disturbances. Solid lines show measured joint angles; dashed lines show policy targets. The knee-tracking offset illustrates the remaining transfer/control mismatch (thesis Fig. 4.4, p. 38). <a href="https://github.com/DevMarkusLejon/RLonSpot/blob/main/data/plotting_images/standing_deployment_log93/FL_joint_pos_deployment_plot.pdf">Original plot ↗</a></figcaption></figure>
+      </div>
+    </section>
+    <section class="case-layout" aria-labelledby="limits-title"><div><p class="eyebrow">03 / What remains</p><h2 id="limits-title">The transfer gap<br> is part of the result.</h2></div><div class="case-body"><p>Simulation is only one part of a robot system. Hardware tracking differences and safety constraints limited what could be concluded from deployment. Those differences are documented rather than hidden behind a single success percentage.</p><ul><li>Standing and locomotion were the demonstrated tasks. Door interaction and traversal remain future ambitions, not completed outcomes.</li><li>The locomotion harness restricted validation of free movement and full disturbance robustness.</li><li>The hardware logs reveal policy-target versus measured-joint mismatch that needs further investigation.</li></ul><p>For a shorter overview, read the <a href="../assets/documents/spot-rl-popular-science-summary.pdf">Swedish popular-science summary (PDF, 1.1 MB)</a>. The full report and <a href="https://github.com/DevMarkusLejon/RLonSpot">public repository</a> provide experimental conditions, implementation detail, and attribution.</p></div></section>
+    <section class="contact-section"><p class="eyebrow">Continue the conversation</p><h2>Interested in the engineering?</h2><div class="hero-actions"><a class="button primary" href="mailto:markus.lejon99@hotmail.com">Email Markus ↗</a><a class="text-link" href="../index.html#projects">Explore more work ↗</a></div></section>
+  </main>
+  <footer class="site-footer wrap"><span>© <span id="year">2026</span> Markus Lejon</span><a href="../index.html">Back to portfolio ↑</a></footer>
+  <script src="../script.js" defer></script>
+</body>
+</html>

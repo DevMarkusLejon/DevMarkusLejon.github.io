@@ -1,0 +1,40 @@
+name: Portfolio Checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "styles.css"
+      - "script.js"
+      - "projects/**"
+      - "assets/**"
+      - "favicon.svg"
+      - "robots.txt"
+      - "sitemap.xml"
+      - "scripts/check-portfolio.py"
+      - ".github/workflows/portfolio-check.yml"
+  pull_request:
+    paths:
+      - "index.html"
+      - "styles.css"
+      - "script.js"
+      - "projects/**"
+      - "assets/**"
+      - "favicon.svg"
+      - "robots.txt"
+      - "sitemap.xml"
+      - "scripts/check-portfolio.py"
+      - ".github/workflows/portfolio-check.yml"
+  workflow_dispatch:
+
+jobs:
+  portfolio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check local links and assets
+        run: python scripts/check-portfolio.py
