@@ -8,6 +8,7 @@ export const materials = {
   grain: new T.MeshStandardMaterial({color:0xba9969,roughness:1}),
   shell: new T.MeshStandardMaterial({color:0x80aaa7,roughness:.76,side:T.DoubleSide}),
   base: new T.MeshStandardMaterial({color:0x526a68,roughness:.85,side:T.DoubleSide}),
+  plexi: new T.MeshStandardMaterial({color:0xddecef,transparent:true,opacity:.22,roughness:.12,depthWrite:false,side:T.DoubleSide}),
   clear: new T.MeshStandardMaterial({color:0xd7dcdd,transparent:true,opacity:.48,roughness:.28,depthWrite:false}),
   black: new T.MeshStandardMaterial({color:0x252d32,roughness:.65}),
   pink: new T.MeshStandardMaterial({color:0xd782a5,roughness:.65}),
@@ -95,7 +96,7 @@ export function buildModel(kind,data) {
   model.root.name=kind==='wood'?'Markus wooden controller — photo reconstruction':'BubbleBox — CAD-derived display model';
   if(kind==='wood') {
     model.keys=data.woodKeys;
-    const bottom=part(model,'bottom','Bottom cover · inferred',-48);plate(360.68,165.10,3,0,[],materials.wood,bottom);
+    const bottom=part(model,'bottom','Transparent plexiglass bottom panel',-48);plate(360.68,165.10,3,0,[],materials.plexi,bottom);
     const frame=part(model,'frame','Wooden frame & corner blocks',0);
     box(360.68,15,8,0,10.5,78.55,materials.edge,frame);
     // Rear wall leaves an opening for the USB-C connector.

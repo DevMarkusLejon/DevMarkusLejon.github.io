@@ -49,6 +49,6 @@ The Spot derivatives were created with FFmpeg from the linked originals. The soc
 
 ## Controller explorer
 
-`assets/controllers/wood-*.webp` and `wood.glb`: photographic reconstruction of Markus's wooden handwired controller, 22 keys, f1copy enclosure dimensions confirmed by Markus. Source home photographs are not published. Internal dimensions and bottom cover are inferred.
+`assets/controllers/wood-*.webp` and `wood.glb`: photographic reconstruction of Markus's wooden handwired controller, 22 keys, f1copy enclosure dimensions confirmed by Markus. Source home photographs are not published. The transparent plexiglass bottom panel was confirmed by Markus. Internal dimensions and panel thicknesses are inferred.
 
 `assets/controllers/bubble-*.webp`, `bubble.glb` and BubbleBox sections in `geometry.json`: derived from UMS-Ultra/BubbleBox V4 mono case and bottom panel, CC BY-NC 4.0. Reconstructed using sampled CAD cross-sections; electronics and controls are schematic. Full provenance, modifications and licenses are in `assets/controllers/README.md` and on the project page.

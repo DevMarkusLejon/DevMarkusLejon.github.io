@@ -6,7 +6,7 @@ Interactive page: `/projects/controllers.html`. The site has no external runtime
 
 Photo reconstruction of Markus Lejon's existing handwired build. The enclosure dimensions are 360.68 × 165.10 × 21 mm, matching JMatthewK/f1copy's README, as confirmed by Markus. These dimensions replaced the initial visual estimate before publication.
 
-The 22 switch positions were perspective-corrected from the top photograph. There are 18 clear caps and four black H/K/G/E caps. The electronics represent a Pico and Treedix USB-C breakout. Interior dimensions, wire routes, component mounting, the USB opening and unseen bottom cover are approximations. No personal source photos are published. This is not manufacturing CAD.
+The 22 switch positions were perspective-corrected from the top photograph. There are 18 clear caps and four black H/K/G/E caps. The electronics represent a Pico and Treedix USB-C breakout. Markus confirmed that the bottom panel is transparent plexiglass. Its 3 mm thickness remains a modelling assumption. Interior dimensions, wire routes, component mounting and the USB opening are approximations. No personal source photos are published. This is not manufacturing CAD.
 
 ## BubbleBox attribution and changes
 
