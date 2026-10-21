@@ -58,3 +58,9 @@ The Spot derivatives were created with FFmpeg from the linked originals. The soc
 `images/kallax-assembly.webp`: captured from this project's procedural Three.js model in exploded view, then encoded as WebP. It is a reconstructed illustration, not a product photograph or a physical assembly test.
 
 `projects/kallax/manual/`: the official [IKEA AA-2703308-1 PDF](https://www.ikea.com/se/en/assembly_instructions/kallax-shelving-unit-white__AA-2703308-1-100.pdf), 2026-03-24, and rendered pages 9–28. These retain their original IKEA diagrams and attribution. The guide supports article 202.758.14's 10-dowel kit; the alternative 14-dowel manual is linked, not animated. Page mapping and modelling limits are retained in `tools/kallax-guide/MANUAL-AUDIT.md`.
+
+## BILLY assembly study
+
+`images/billy-assembly.webp`: captured from this project's procedural Three.js BILLY model in exploded view, then encoded as WebP. Reconstructed illustration; not a product photograph or physical assembly test.
+
+`projects/billy/manual/`: the official [IKEA AA-1823127-9 PDF](https://www.ikea.com/se/en/assembly_instructions/billy-bookcase-white__AA-1823127-9-100.pdf), printed 2024-03-25, and rendered pages 5–13. Original IKEA diagrams retain their attribution. This guide covers the white 80 × 28 × 202 cm bookcase, article 002.638.50. All 14 numbered steps, fitting counts, the back-panel marking sequence and wall attachment are mapped in `tools/billy-guide/MANUAL-AUDIT.md`.
