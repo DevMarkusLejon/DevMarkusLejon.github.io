@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>KALLAX portfolio image capture</title>
+    <style>
+      body { margin:0; background:#e8ece4; }
+      canvas { display:block; width:min(100vw,1000px); aspect-ratio:1000 / 678; background:radial-gradient(ellipse at 48% 37%,#f4f4eb,#e8ece4 70%,#e0e6da); }
+    </style>
+  </head>
+  <body>
+    <canvas aria-label="Exploded KALLAX model for the portfolio image"></canvas>
+    <script type="module">
+      import { createAssemblyScene } from './scene.js';
+      createAssemblyScene(document.querySelector('canvas')).setExploded(true);
+    </script>
+  </body>
+</html>

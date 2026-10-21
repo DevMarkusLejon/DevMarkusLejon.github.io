@@ -1,0 +1,60 @@
+.installation-options { display:flex; align-items:center; gap:13px; margin-top:17px; font-size:11px; color:var(--muted); }
+.installation-options > div { display:flex; border:1px solid var(--line); border-radius:6px; padding:3px; }
+.installation-options button { padding:7px 10px; font-size:11px; border:0; background:transparent; border-radius:3px; }
+.installation-options button[aria-pressed=true] { background:var(--ink); color:var(--paper); }
+.version-note { display:flex; align-items:center; gap:12px; padding:0 0 17px; color:#686c64; font-size:11px; line-height:1.6; }
+.version-tag { background:#e4e8dd; color:#49604c; border-radius:4px; padding:4px 8px; font-size:10px; font-weight:650; white-space:nowrap; }
+.version-note strong { font-weight:550; }.version-note a { text-underline-offset:3px; }
+.part-quantity { font-size:13px; font-weight:550; margin-left:auto; white-space:nowrap; }
+.tip-mark { display:flex; align-items:center; justify-content:center; width:18px; height:18px; border:1px solid currentColor; border-radius:50%; font-family:Georgia,serif; font-size:13px; font-weight:600; flex-shrink:0; margin-top:2px; }
+.prep-facts { display:flex; flex-wrap:wrap; gap:7px; margin:20px 0; }.prep-facts span { border:1px solid var(--line); border-radius:5px; padding:7px 9px; font-size:11px; }
+.inventory-grid { border-top:1px solid var(--line); }.inventory-item { display:flex; align-items:center; gap:18px; padding:14px 0; border-bottom:1px solid var(--line); }
+.inventory-item svg { width:30px; height:30px; color:#7c776c; flex-shrink:0; }.inventory-item div { min-width:0; }
+.inventory-item strong { display:block; font-size:13px; font-weight:550; }.inventory-item small { display:block; margin-top:3px; font-size:10px; color:var(--muted); overflow-wrap:anywhere; }.inventory-item > span { margin-left:auto; font-size:13px; }
+.guide-dialog h3 { font-size:13px; margin-top:25px; }.source-dialog { max-width:760px; padding:22px; }.source-dialog img { display:block; width:100%; height:auto; margin:14px 0; }.source-dialog-footer { display:flex; justify-content:space-between; gap:15px; font-size:12px; padding:12px 0 0; }
+.completion label { display:flex; gap:9px; font-size:12px; line-height:1.6; margin:11px 0; }.completion input { accent-color:var(--teal); }.completion .text-button { margin-top:13px; }
+.journey-number { display:block; font-size:12px; margin-bottom:6px; }.journey-label { display:block; max-width:110px; font-size:10px; line-height:1.5; }
+.step-parts .part-item { min-width:0; }.part-item > div { min-width:0; }.part-item > div > span { overflow-wrap:anywhere; }
+.portfolio-mark { font-size:30px; font-weight:800; letter-spacing:-3px; margin-right:18px; }
+.portfolio-mark span { color:var(--accent); }
+.wordmark .wordmark-caption { font-size:14px; font-weight:650; letter-spacing:0; color:var(--ink); }
+.wordmark { color:var(--ink); }
+.back-link { text-decoration:none; }
+.eyebrow, .project-eyebrow, .edition-label, .step-count, .section-label { font-family:Consolas,"Courier New",monospace; }
+h1 { font-weight:650; letter-spacing:-.065em; }
+.product-subtitle { font-weight:600; letter-spacing:-.05em; }
+.instruction-panel h2, .journey-heading h2, .guide-dialog h2 { font-weight:600; letter-spacing:-.045em; }
+.scene-wrap { background:radial-gradient(ellipse at 48% 37%,#f4f4eb 0%,#e8ece4 70%,#e0e6da 100%); }
+.footer-note { font-family:inherit; text-decoration:none; font-size:11px; }
+.step-actions { background:var(--paper); }
+.no-js-note { padding:20px 30px; background:var(--paper); border-top:1px solid var(--line); font-size:14px; }
+@media(max-width:850px) { .header-actions { gap:15px; } .header-actions .back-link { font-size:11px; } }
+@media(max-width:680px) { .portfolio-mark { margin-right:10px; font-size:26px; } .wordmark .wordmark-caption { font-size:12px; max-width:none; } .header-actions .source-button { display:none; } .header-actions .back-link { display:block; font-size:11px; } }
+@media(max-width:680px) { .version-note { align-items:flex-start; font-size:10px; }.installation-options { margin-top:12px; }.source-dialog { padding:15px; }.source-dialog-footer { flex-wrap:wrap; }.journey-label { max-width:90px; } }
+@media(max-width:680px) {
+  .product-heading { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; padding:23px 0 18px; }
+  .product-summary { display:flex; flex-wrap:wrap; align-items:center; gap:12px; min-width:0; }
+  .product-subtitle { display:none; }
+  .product-specs { font-size:11px; max-width:none; white-space:normal; }
+  .product-eyebrow { font-size:8px; }
+  .product-summary .inventory-button { display:flex; font-size:11px; margin:0; padding:6px 0; }
+  .installation-options { width:100%; margin:0; font-size:11px; justify-content:space-between; }
+  .installation-options button { font-size:12px; padding:9px 14px; white-space:nowrap; }
+  .version-note { line-height:1.7; }
+  .scene-wrap { height:330px; }
+  .viewer-tools { flex-wrap:wrap; gap:6px; }
+  .viewer-tools button { font-size:11px; padding:10px 4px; gap:5px; }
+  .viewer-tools svg { width:15px; height:15px; }
+  .view-switch button { font-size:11px; padding:9px 12px; }
+  .rotate-hint, .icon-text-button { font-size:10px; }
+  .replay-button { font-size:12px; }
+  .step-description { font-size:14px; line-height:1.7; }
+  .part-item strong { font-size:13px; }
+  .part-item span:not(.part-swatch) { font-size:11px; }
+  .step-tip { font-size:12px; }
+  .manual-link { font-size:12px; }
+  .step-actions .previous-button, .step-actions .next-button { font-size:13px; }
+  .guide-dialog p, .guide-dialog li { font-size:13px; }
+  .model-step-pill { font-size:10px; max-width:calc(100% - 40px); }
+  .inventory-item strong { font-size:13px; }
+}

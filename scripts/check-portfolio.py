@@ -58,7 +58,7 @@ def local_host(host):
 def main():
     errors = []
     cache = {}
-    paths = [ROOT / "index.html", *sorted((ROOT / "projects").glob("*.html"))]
+    paths = [ROOT / "index.html", *sorted((ROOT / "projects").rglob("*.html"))]
 
     def describe(path):
         return path.relative_to(ROOT).as_posix()

@@ -52,3 +52,9 @@ The Spot derivatives were created with FFmpeg from the linked originals. The soc
 `assets/controllers/wood-*.webp` and `wood.glb`: photographic reconstruction of Markus's wooden handwired controller, 22 keys, f1copy enclosure dimensions confirmed by Markus. Source home photographs are not published. The transparent plexiglass bottom panel was confirmed by Markus. Internal dimensions and panel thicknesses are inferred.
 
 `assets/controllers/bubble-*.webp`, `bubble.glb` and BubbleBox sections in `geometry.json`: derived from UMS-Ultra/BubbleBox V4 mono case and bottom panel, CC BY-NC 4.0. Reconstructed using sampled CAD cross-sections; electronics and controls are schematic. Full provenance, modifications and licenses are in `assets/controllers/README.md` and on the project page.
+
+## KALLAX assembly study
+
+`images/kallax-assembly.webp`: captured from this project's procedural Three.js model in exploded view, then encoded as WebP. It is a reconstructed illustration, not a product photograph or a physical assembly test.
+
+`projects/kallax/manual/`: the official [IKEA AA-2703308-1 PDF](https://www.ikea.com/se/en/assembly_instructions/kallax-shelving-unit-white__AA-2703308-1-100.pdf), 2026-03-24, and rendered pages 9–28. These retain their original IKEA diagrams and attribution. The guide supports article 202.758.14's 10-dowel kit; the alternative 14-dowel manual is linked, not animated. Page mapping and modelling limits are retained in `tools/kallax-guide/MANUAL-AUDIT.md`.
