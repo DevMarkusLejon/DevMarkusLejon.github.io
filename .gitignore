@@ -2,3 +2,4 @@ dist/
 .playwright-cli/
 output/playwright/
 __pycache__/
+tools/grids/godot/.godot/

@@ -8,11 +8,14 @@ on:
       - "styles.css"
       - "script.js"
       - "projects/**"
+      - "grids/**"
+      - "tools/grids/**"
       - "assets/**"
       - "favicon.svg"
       - "robots.txt"
       - "sitemap.xml"
       - "scripts/check-portfolio.py"
+      - "scripts/check-grids.py"
       - ".github/workflows/portfolio-check.yml"
   pull_request:
     paths:
@@ -20,11 +23,14 @@ on:
       - "styles.css"
       - "script.js"
       - "projects/**"
+      - "grids/**"
+      - "tools/grids/**"
       - "assets/**"
       - "favicon.svg"
       - "robots.txt"
       - "sitemap.xml"
       - "scripts/check-portfolio.py"
+      - "scripts/check-grids.py"
       - ".github/workflows/portfolio-check.yml"
   workflow_dispatch:
 
@@ -38,3 +44,9 @@ jobs:
           python-version: "3.12"
       - name: Check local links and assets
         run: python scripts/check-portfolio.py
+      - name: Check Grids browser bundle
+        run: python scripts/check-grids.py
+      - name: Check Grids JavaScript syntax
+        run: |
+          node --check grids/browser-bridge.js
+          node --check grids/browser-worker.mjs

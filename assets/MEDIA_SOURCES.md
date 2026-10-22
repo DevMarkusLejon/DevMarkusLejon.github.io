@@ -21,9 +21,9 @@ Source: [RLonSpot / finetune_diverse_locomotion.mp4](https://github.com/DevMarku
 
 Suggested caption: “Supervised locomotion deployment test with an overhead safety tether.” Representative source frames and the poster were visually checked. The clip shows Spot moving in a lab with an overhead tether and two supervisors. Do not describe it as untethered autonomy, a door-opening demonstration, or a quantified performance result.
 
-## Existing Grids image
+## Grids Godot browser version
 
-`posters/grids-ai-demo.png` predates this media pass and is retained unchanged. Use it as a game-interface image, not as evidence of a particular trained policy's performance.
+`posters/grids-godot.webp` is a screenshot of the playable Godot/Python browser version at `/grids/`, captured 22 October 2026 and encoded as WebP. The game uses first-frame PNG artwork from the supplied original Grids 1.5.7 GameMaker project. Source, attribution and build instructions are under `tools/grids/`. The screenshot illustrates gameplay, not a measured AI win rate. It replaces the earlier Python recreation's image and link.
 
 ## Standing-policy hardware plot
 

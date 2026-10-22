@@ -1,0 +1,90 @@
+{
+  "format": "grids-ai-linear-v1",
+  "features": [
+    "initiative",
+    "commander_damage",
+    "unit_damage",
+    "unit_kill",
+    "commander_kill",
+    "deploy_hp",
+    "deploy_damage",
+    "commander_progress",
+    "enemy_progress",
+    "healing",
+    "draw_unit",
+    "draw_item",
+    "strength",
+    "disable",
+    "control",
+    "area_damage",
+    "fire_pressure",
+    "teleport_progress",
+    "action_cost",
+    "end_with_actions",
+    "exposure"
+  ],
+  "weights": {
+    "initiative": 0.0011967060579261939,
+    "commander_damage": 11.988319186673182,
+    "unit_damage": 2.961248471127036,
+    "unit_kill": 4.487780419436683,
+    "commander_kill": 80.29483912386931,
+    "deploy_hp": 2.3754683986166056,
+    "deploy_damage": 1.5080312801285256,
+    "commander_progress": 0.5613978717670292,
+    "enemy_progress": 0.29270092893230304,
+    "healing": 2.126178982505538,
+    "draw_unit": 0.3575638442637073,
+    "draw_item": 0.47069352240492807,
+    "strength": 2.055125263756938,
+    "disable": 2.787416280652059,
+    "control": 5.4551768926349675,
+    "area_damage": 1.3555165484891385,
+    "fire_pressure": 2.1993279669141343,
+    "teleport_progress": 0.4939679542527772,
+    "action_cost": -0.17696820217815434,
+    "end_with_actions": -0.7520576457721712,
+    "exposure": -0.6373180450072577
+  },
+  "algorithm": "validated v2 self-play weights with broadened high-confidence fair-information turn search",
+  "rules_version": "grids-1.5.7-core-v2-moving-melee-cost",
+  "parent_checkpoint": "models/search_v2.json",
+  "parent_sha256": "D62E3E7EC2554C1862476EDC87783B8F63E39D473EBA6CC6AC3F4EB1E88C91BD",
+  "search": {
+    "beam_width": 18,
+    "branch_width": 14,
+    "response_width": 18,
+    "response_beam_width": 0,
+    "override_margin": 240.0
+  },
+  "evaluation": {
+    "paired_head_to_head_vs_v2": {
+      "games": 48,
+      "wins": 25,
+      "losses": 23
+    },
+    "paired_seed_search_comparison": {
+      "games": 48,
+      "challenger_wins": 25,
+      "v2_control_wins": 20
+    },
+    "independent_deck_guest_comparison": {
+      "games": 144,
+      "challenger_wins": 67,
+      "v2_control_wins": 50,
+      "challenger_only_wins": 28,
+      "v2_only_wins": 11,
+      "two_sided_exact_sign_test_p": 0.0094753042794764,
+      "bank_differences": [
+        -2,
+        7,
+        12
+      ]
+    },
+    "latency_dense_midgame_seconds": {
+      "v2_profile": 0.146,
+      "v3_profile": 0.179
+    },
+    "hidden_information": "opponent hand excluded; private deck streams independent; draw ends plan; opponent response uses public board actions only"
+  }
+}

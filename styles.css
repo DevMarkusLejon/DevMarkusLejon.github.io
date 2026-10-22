@@ -91,8 +91,8 @@ h3 { font-size: clamp(24px, 2.6vw, 34px); line-height: 1.17; letter-spacing: -.0
 .pipeline b { color: var(--teal); font-weight: 400; }
 .pipeline i { color: var(--teal); font-style: normal; font-size: 13px; line-height: 18px; }
 .architecture-visual > p { font-family: Consolas, monospace; font-size: 9px; color: var(--muted); text-align: center; }
-.game-visual { background: #241d12; padding: 24px 46px 0; }
-.game-visual img { width: 100%; object-fit: cover; }
+.game-visual { display: flex; align-items: center; background: #0d151b; padding: 12px; }
+.game-visual img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .collaboration-media { background: #101917; padding: 18px; }
 .collaboration-media video { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 706; object-fit: contain; background: #101917; }
 .collaboration-media .media-caption { margin-top: 12px; }

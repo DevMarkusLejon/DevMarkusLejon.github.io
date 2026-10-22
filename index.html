@@ -81,13 +81,13 @@
           </div>
         </article>
         <article class="project-card">
-          <div class="game-visual"><img src="assets/posters/grids-ai-demo.png" alt="Grids tactical game: a ten-column, seven-row board with blue and red commanders." width="738" height="910" loading="lazy"><span class="image-label">ACTUAL GAME / 10 × 7</span></div>
+          <a class="game-visual" href="grids/" aria-label="Play Grids against AI"><img src="assets/posters/grids-godot.webp" alt="Grids in Godot: original artwork, a ten-by-seven battlefield and a hand of tactical cards." width="1280" height="900" loading="lazy"><span class="image-label">PLAY IN YOUR BROWSER / YOUR OWN MATCH</span></a>
           <div class="project-content">
-            <p class="project-kicker">03 / Python & applied AI</p><h3>Grids: a small game.<br> A whole experiment loop.</h3>
-            <p>A tactical game with self-play, policy/value model experiments, browser play, and an evaluation-backed model registry.</p>
-            <details><summary>What makes it engineering?</summary><div class="detail-copy"><p>A headless Python engine supports repeatable matches. Training and evaluation workflows separate holdout results, seeded benchmarks, and experimental model rankings.</p><p>The browser board is the actual 10 × 7 game—not a decorative path animation. The repository includes local run instructions and a model dashboard; no unavailable hosted demo is advertised here.</p></div></details>
-            <ul class="tag-list" aria-label="Grids technologies"><li>Python</li><li>PyTorch</li><li>Self-play</li><li>Evaluation</li></ul>
-            <a class="text-link" href="https://github.com/DevMarkusLejon/Grids_ai_python">Explore code & run instructions ↗</a>
+            <p class="project-kicker">03 / Game development & applied AI</p><h3>Grids.<br> Your move against AI.</h3>
+            <p>Deploy units, combine cards and protect your commander. Play the new Godot version with the original artwork, directly in your browser. Every player gets an independent match. No download or account needed.</p>
+            <details><summary>How does it work?</summary><div class="detail-copy"><p>A source-derived Python rules engine and a self-play-trained search AI run in a separate browser worker. Godot handles the board and controls while the same engine validates and simulates moves.</p><p>Each tab owns its match. The current version includes Plains and the default deck. Best played on desktop; the first start downloads the game and AI runtime.</p></div></details>
+            <ul class="tag-list" aria-label="Grids technologies"><li>Godot</li><li>Python</li><li>Self-play</li><li>WebAssembly</li></ul>
+            <div class="project-actions"><a class="button primary" href="grids/">Play against AI ↗</a><a class="text-link" href="https://github.com/DevMarkusLejon/DevMarkusLejon.github.io/tree/main/tools/grids">Explore the source ↗</a></div>
           </div>
         </article>
       </div>
