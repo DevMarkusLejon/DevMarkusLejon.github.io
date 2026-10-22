@@ -1,7 +1,7 @@
 """One isolated match, shared by the local server and browser worker."""
 from __future__ import annotations
 
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from pathlib import Path
 
 from .agents import load_checkpoint
@@ -24,6 +24,7 @@ class PrototypeMatch:
         self.game = new_game(self.seed)
         self.message = "Välj din blå commander eller ett kort."
         self.ai_cells = []
+        self.event = {}
 
     def state(self) -> dict:
         game = self.game
@@ -39,6 +40,7 @@ class PrototypeMatch:
             "winner": game.winner,
             "message": self.message,
             "ai_cells": self.ai_cells,
+            "event": self.event,
             "units": [asdict(unit) | {"attacked": sorted(unit.attacked)} for unit in game.units.values()],
             "blocks": [[x, y] for x, y in sorted(PLAIN_BLOCKS)],
             "logs": [[x, y, hp] for (x, y), hp in game.logs.items()],
@@ -62,8 +64,7 @@ class PrototypeMatch:
             raise ValueError("Draget finns inte bland de tillåtna dragen.")
         action = legal[int(action_id)]
         self.message = self.game.describe_action(action)
-        self.game.step(action)
-        self.revision += 1
+        self._step(action)
         self.ai_cells = []
         self._finish_message()
 
@@ -82,9 +83,48 @@ class PrototypeMatch:
             self.ai_cells.append([action.x, action.y])
         if action.kind == "attack_log":
             self.ai_cells.append([int(value) for value in action.card.split(",")])
+        self._step(action)
+        self._finish_message()
+
+    def _step(self, action) -> None:
+        # Record public combat results without changing the simulation or search.
+        before = {uid: replace(unit) for uid, unit in self.game.units.items()}
+        originals = self.game.units.copy()
+        logs = self.game.logs.copy()
+        attacker = before.get(action.unit_id)
+        target = before.get(action.target_id)
+        cell = list(target.pos) if target else [action.x, action.y]
+        if action.kind == "attack_log":
+            cell = [int(value) for value in action.card.split(",")]
         self.game.step(action)
         self.revision += 1
-        self._finish_message()
+        changes = []
+        for uid, old in before.items():
+            new = self.game.units.get(uid)
+            hp = max(0, new.hp) if new else 0
+            armor = new.armor if new else 0
+            if hp != old.hp or armor != old.armor:
+                changes.append({
+                    "id": uid, "kind": old.kind, "owner": old.owner,
+                    "cell": list(old.pos), "hp_before": old.hp, "hp_after": hp,
+                    "hp_damage": old.hp - originals[uid].hp,
+                    "armor_before": old.armor, "armor_after": armor, "dead": new is None,
+                })
+        for pos, hp in logs.items():
+            remaining = self.game.logs.get(pos, 0)
+            if hp != remaining:
+                changes.append({"id": -1, "kind": "log", "cell": list(pos),
+                                "hp_before": hp, "hp_after": remaining,
+                                "armor_before": 0, "armor_after": 0, "dead": remaining == 0})
+        moved = self.game.units.get(action.unit_id)
+        self.event = {
+            "kind": action.kind, "card": action.card, "unit_id": action.unit_id,
+            "unit_kind": attacker.kind if attacker else "",
+            "attack_type": UNIT_SPECS[attacker.kind].attack_type if attacker else "",
+            "source": list(attacker.pos) if attacker else cell,
+            "approach": list(moved.pos) if moved else cell,
+            "target": cell, "changes": changes, "description": self.message,
+        }
 
     def _finish_message(self) -> None:
         if self.game.terminal:
@@ -98,4 +138,5 @@ class PrototypeMatch:
         self.revision += 1
         self.message = "Ny match. Välj din commander eller ett kort."
         self.ai_cells = []
+        self.event = {}
 

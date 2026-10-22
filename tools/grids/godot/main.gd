@@ -8,6 +8,8 @@ const BLUE = Color("70bfff")
 const RED = Color("f28c79")
 const MINT = Color("a6e4ba")
 const AI_STEP_PAUSE = 1.0
+const HIT_TIME = 0.42
+const COMBAT_TIME = 1.35
 
 var state: Dictionary = {}
 var selected_unit: int = -1
@@ -22,10 +24,14 @@ var display_positions: Dictionary = {}
 var font: Font = ThemeDB.fallback_font
 var browser_bridge: JavaScriptObject
 var browser_callback: JavaScriptObject
+var combat: Dictionary = {}
+var combat_age = 0.0
 
 
 func _ready() -> void:
 	for name in ["commander", "warrior", "archer", "freeze_mage", "viking", "assassin", "healer", "ninja", "base", "log", "tree", "rock", "grass", "strength", "action_block", "freeze", "meteorite", "brain_power", "fireball", "teleport", "charm"]:
+		art[name] = load("res://assets/" + name + ".png")
+	for name in ["arrow", "ice_spike", "spark", "healing_effect", "meteor", "blood"]:
 		art[name] = load("res://assets/" + name + ".png")
 	if OS.has_feature("web"):
 		base_url = str(JavaScriptBridge.eval("window.location.origin"))
@@ -46,9 +52,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var moving = false
+	if not combat.is_empty():
+		combat_age += delta
+		moving = true
 	for unit in state.get("units", []):
 		var id_value = int(unit.id)
 		var target = BOARD + Vector2(unit.x, unit.y) * CELL
+		if not combat.is_empty() and int(unit.id) == int(combat.unit_id) and combat.attack_type == "melee" and combat.kind in ["attack", "attack_log"]:
+			target = _cell_position(combat.approach) - Vector2.ONE * CELL / 2
 		if not display_positions.has(id_value):
 			display_positions[id_value] = target
 		var current: Vector2 = display_positions[id_value]
@@ -111,7 +122,6 @@ func _browser_received(args: Array) -> void:
 
 
 func _received(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-	busy = false
 	var parsed = JSON.parse_string(body.get_string_from_utf8())
 	if result != HTTPRequest.RESULT_SUCCESS or not parsed is Dictionary:
 		error_text = "Ingen kontakt. Starta prototypens Python-server och ladda om sidan."
@@ -120,9 +130,23 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 		if parsed.has("state"):
 			state = parsed.state
 	else:
+		var event: Dictionary = parsed.get("event", {})
+		if not state.is_empty() and int(parsed.revision) > int(state.revision) and _has_combat(event):
+			combat = event
+			combat_age = 0.0
+			selected_unit = -1
+			selected_card = ""
+			_publish_debug()
+			queue_redraw()
+			await get_tree().create_timer(HIT_TIME).timeout
+			state = parsed
+			_publish_debug()
+			await get_tree().create_timer(COMBAT_TIME - HIT_TIME).timeout
+			combat = {}
 		state = parsed
 		if int(state.turn) == 1 and int(state.actions_left) == 7:
 			display_positions.clear()
+	busy = false
 	selected_unit = -1
 	selected_card = ""
 	_rebuild_hand()
@@ -142,6 +166,76 @@ func _continue_ai(revision: int) -> void:
 func _publish_debug() -> void:
 	if OS.has_feature("web"):
 		JavaScriptBridge.eval("window.gridsPrototypeState = " + JSON.stringify(state))
+		JavaScriptBridge.eval("window.gridsCombat = " + JSON.stringify({"active": not combat.is_empty(), "event": combat}))
+
+
+func _has_combat(event: Dictionary) -> bool:
+	return not event.is_empty() and (event.kind in ["attack", "attack_log", "heal"] or not event.changes.is_empty() or (event.kind == "item" and event.target[0] >= 0))
+
+
+func _cell_position(cell: Array) -> Vector2:
+	return BOARD + (Vector2(cell[0], cell[1]) + Vector2.ONE * 0.5) * CELL
+
+
+func _outlined_text(value: String, at: Vector2, size: int, color: Color) -> void:
+	draw_string_outline(font, at, value, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 5, Color(0.04, 0.07, 0.09, color.a))
+	_text(value, at, size, color)
+
+
+func _draw_combat() -> void:
+	if combat.is_empty():
+		return
+	var target = _cell_position(combat.target)
+	var source = _cell_position(combat.source)
+	var windup = clampf(combat_age / HIT_TIME, 0, 1)
+	var after = combat_age - HIT_TIME
+	var healing = combat.kind == "heal"
+	var color = MINT if healing else RED
+	if combat.attack_type == "magic" or combat.card == "freeze":
+		color = Color("a1eaff")
+	if combat_age < HIT_TIME and combat.kind in ["attack", "attack_log", "heal", "item"]:
+		draw_arc(target, 29 + 7 * sin(windup * PI), 0, TAU, 36, Color(color, 0.8), 2, true)
+		if combat.unit_kind == "archer" and combat.kind in ["attack", "attack_log"]:
+			var point = source.lerp(target, windup) - Vector2(0, sin(windup * PI) * 45)
+			var direction = target - source + Vector2(0, -cos(windup * PI) * 45 * PI)
+			draw_set_transform(point, direction.angle() + PI / 2, Vector2.ONE)
+			_picture("arrow", Rect2(-19, -19, 38, 38))
+			draw_set_transform(Vector2.ZERO)
+		elif combat.card == "meteorite":
+			var point = target + Vector2(90, -180) * (1 - windup)
+			_picture("meteor", Rect2(point - Vector2.ONE * 30, Vector2.ONE * 60))
+		elif combat.attack_type in ["magic", "healer"]:
+			draw_arc(source, 17 + 12 * windup, -PI, 0, 24, Color(color, windup), 3, true)
+	if after < 0:
+		return
+	var fade = clampf(1 - after / (COMBAT_TIME - HIT_TIME), 0, 1)
+	if combat.kind in ["attack", "attack_log", "heal", "item"] and after < 0.45:
+		draw_arc(target, 8 + after * 70, 0, TAU, 32, Color(color, 1 - after / 0.45), 3, true)
+		if combat.unit_kind == "freeze_mage" or combat.card == "freeze":
+			_picture("ice_spike", Rect2(target + Vector2(-CELL / 2, -18), Vector2(CELL, CELL / 2)), Color(1, 1, 1, fade))
+		if healing:
+			for index in range(4):
+				var point = target + Vector2(sin(index * 2.1) * 22, 12 - after * 60 - index * 7)
+				_picture("healing_effect", Rect2(point, Vector2.ONE * 12), Color(1, 1, 1, fade))
+	for change in combat.changes:
+		var center = _cell_position(change.cell)
+		var damage = int(change.get("hp_damage", int(change.hp_before) - int(change.hp_after)))
+		var absorbed = int(change.armor_before) - int(change.armor_after)
+		if change.dead:
+			_picture(change.kind, Rect2(center - Vector2.ONE * CELL / 2, Vector2.ONE * CELL), Color(1, 1, 1, fade * 0.6))
+		if damage > 0 or absorbed > 0:
+			for index in range(7):
+				var direction = Vector2.from_angle(index * TAU / 7 + 0.3)
+				var point = center + direction * (8 + after * 65) + Vector2(0, after * after * 35)
+				_picture("spark" if absorbed > 0 or change.kind == "log" else "blood", Rect2(point - Vector2.ONE * 4, Vector2.ONE * 8), Color(1, 1, 1, fade))
+		var rise = Vector2(-21, -30 - after * 38)
+		var popup_color = MINT if damage < 0 else Color("ff685e")
+		popup_color.a = minf(fade * 3, 1)
+		if damage != 0:
+			var text = ("−" if damage > 0 else "+") + str(absi(damage))
+			_outlined_text(text, center + rise, 29 + int(4 * sin(minf(after * 8, PI))), popup_color)
+		if absorbed > 0:
+			_outlined_text("−" + str(absorbed) + " sköld", center + rise + Vector2(-7, -27), 18, Color(BLUE, popup_color.a))
 
 
 func _rebuild_hand() -> void:
@@ -307,23 +401,52 @@ func _draw() -> void:
 		var tint = BLUE if int(unit.owner) == 0 else RED
 		draw_ellipse_shadow(pos + Vector2(CELL / 2, CELL - 15))
 		_picture("base", Rect2(pos, Vector2.ONE * CELL), tint)
-		_picture(unit.kind, Rect2(pos, Vector2.ONE * CELL))
-		draw_rect(Rect2(pos + Vector2(12, CELL - 8), Vector2(CELL - 24, 4)), Color("243127"))
-		var hp_fraction = clampf(float(unit.hp) / (float(unit.max_hp) * 1.2), 0, 1)
-		draw_rect(Rect2(pos + Vector2(12, CELL - 8), Vector2((CELL - 24) * hp_fraction, 4)), tint)
-		_text(str(int(unit.hp)), pos + Vector2(4, 16), 13, Color("10231d"))
+		var sprite_pos = pos + Vector2.ONE * CELL / 2
+		var angle = 0.0
+		var shown_hp = float(unit.hp)
+		var sprite_tint = Color.WHITE
+		if not combat.is_empty():
+			if int(unit.id) == int(combat.unit_id) and combat.kind in ["attack", "attack_log", "heal"]:
+				var pulse = sin(clampf(combat_age / (HIT_TIME * 2), 0, 1) * PI)
+				var direction = (_cell_position(combat.target) - sprite_pos).normalized()
+				if combat.attack_type == "melee":
+					sprite_pos += direction * pulse * 24
+					angle = pulse * (0.9 if combat.unit_kind in ["warrior", "viking", "assassin"] else 0.25) * (1 if direction.x >= 0 else -1)
+				elif combat.attack_type in ["magic", "healer"]:
+					sprite_pos.y -= pulse * 15
+					angle = pulse * 0.3
+			for change in combat.changes:
+				if int(change.id) == int(unit.id) and combat_age >= HIT_TIME:
+					var after = combat_age - HIT_TIME
+					shown_hp = lerpf(float(change.hp_before), float(change.hp_after), clampf(after / 0.45, 0, 1))
+					if change.hp_before > change.hp_after and after < 0.22:
+						sprite_tint = Color(1, 0.45 + after * 2, 0.45 + after * 2)
+						sprite_pos.x += sin(after * 70) * 4 * (1 - after / 0.22)
+		draw_set_transform(sprite_pos, angle, Vector2.ONE)
+		_picture(unit.kind, Rect2(-Vector2.ONE * CELL / 2, Vector2.ONE * CELL), sprite_tint)
+		draw_set_transform(Vector2.ZERO)
+		var bar_pos = pos + Vector2(10, CELL - 9)
+		draw_rect(Rect2(bar_pos, Vector2(CELL - 20, 6)), Color("243127"))
+		var hp_fraction = clampf(shown_hp / float(unit.max_hp), 0, 1)
+		draw_rect(Rect2(bar_pos, Vector2((CELL - 20) * hp_fraction, 6)), tint)
+		if shown_hp > float(unit.max_hp):
+			draw_rect(Rect2(bar_pos, Vector2((CELL - 20) * (shown_hp / float(unit.max_hp) - 1), 6)), MINT)
+		_outlined_text(str(maxi(0, roundi(shown_hp))), pos + Vector2(2, 13), 16, INK)
 		if int(unit.id) == selected_unit:
 			draw_rect(Rect2(pos + Vector2.ONE * 2, Vector2.ONE * (CELL - 4)), BLUE, false, 3)
 		if int(unit.frozen) > 0:
 			draw_rect(Rect2(pos + Vector2.ONE * 6, Vector2.ONE * (CELL - 12)), Color(0.5, 0.8, 1, 0.35))
 		if int(unit.burning) > 0:
 			draw_circle(pos + Vector2(CELL - 12, 12), 6, Color("ffb568"))
+	_draw_combat()
 	for x in range(10):
 		_text(str(x + 1), BOARD + Vector2(x * CELL + CELL / 2 - 4, -13), 12, MUTED)
 	for y in range(7):
 		_text(str(y + 1), BOARD + Vector2(-20, y * CELL + CELL / 2 + 5), 12, MUTED)
 	var message: String = state.get("message", "Ansluter till Python-motorn…")
-	if busy and int(state.get("player", 0)) != 1:
+	if not combat.is_empty():
+		message = combat.description
+	elif busy and int(state.get("player", 0)) != 1:
 		message = "Bearbetar draget… AI:n tänker vid turbyte."
 	elif not error_text.is_empty():
 		message = error_text

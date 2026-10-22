@@ -25,6 +25,11 @@ AI turns advance through `/api/ai-step`, one action per worker request. The
 Godot client waits one second between board updates, marks the affected cells
 and shows the action description. Human moves are blocked during the AI turn;
 resetting during a pause invalidates the pending step using the match revision.
+Combat plays to completion before the next action can start. Its public event
+records source/impact cells, HP and armor changes, and deaths for both players.
+The client reveals the new board at impact, then animates knockback, HP bars,
+rising red damage numbers, blue armor loss and green healing numbers. Lethal
+hits retain their full damage value while the HP bar stops at zero.
 
 ## Source and build
 
@@ -50,7 +55,8 @@ There is no `/api` server to start. Use HTTP, not `file://`.
 
 Plains and the default deck; movement, deployment, combat, healing, items,
 draws, end turn and AI replies. Desktop/landscape controls. Basic movement
-interpolation; combat effects and sound remain future work. Pixel-level
+interpolation, melee lunges/rotation, arrow flight, casting, impact particles,
+ice, healing and meteor effects use original artwork. Sound remains future work. Pixel-level
 line-of-sight, corner knockback, overlapping ice and fire along animated paths
 remain fidelity comparisons. See `godot/ASSETS.md` for artwork provenance.
 
@@ -63,8 +69,11 @@ The live HTTPS page was tested in Chromium with two independent browser
 contexts. A commander move, end turn, AI response and reset in the first
 context did not change the second context's turn, revision or unit position.
 The tested live page had zero console errors and warnings. The underlying
-engine's 69 tests passed, including individual AI steps and reset invalidation.
-Browser timing checks confirmed roughly one second between AI updates and
-that resetting during a pause leaves the new match untouched. CI checks links, deployed bundle
+engine's 75 tests passed, including individual AI steps, reset invalidation,
+damage, armor, lethal hits, healing and fire damage. Chromium render fixtures
+cover melee, arrows, ice, healing, death, armor, logs, meteors and burning.
+These fixtures use real engine results with the browser bridge stubbed for
+repeatable visual inspection. AI pauses remain one second after animation.
+CI checks links, deployed bundle
 consistency and worker JavaScript syntax. A full browser match to victory and
 mobile/Safari have not been validated.
