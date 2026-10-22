@@ -1,0 +1,5 @@
+.flatpack-home { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; margin-top:26px; border:1px solid var(--line); background:var(--white); scroll-margin-top:90px; }
+.flatpack-art { height:100%; min-height:340px; background:#e8ece4; }.flatpack-art a { display:block; position:relative; height:100%; }.flatpack-art img { display:block; width:100%; height:100%; object-fit:cover; }
+.flatpack-home .project-content { padding:32px 38px; }.flatpack-links { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 15px; }.flatpack-links a { color:var(--forest,#1c6450); font-size:11px; font-weight:700; letter-spacing:.04em; border:1px solid var(--line); border-radius:3px; padding:7px 10px; text-decoration:none; scroll-margin-top:280px; }.flatpack-links a:hover { background:#e8ece4; }
+.flatpack-home .flatpack-evidence { font-size:12px; line-height:1.65; }.flatpack-home .project-actions { margin-top:22px; }
+@media(max-width:760px) { .flatpack-home { grid-template-columns:1fr; margin-top:22px; }.flatpack-art { min-height:0; height:auto; }.flatpack-art img { height:auto; aspect-ratio:1.5; }.flatpack-home .project-content { padding:26px; } }

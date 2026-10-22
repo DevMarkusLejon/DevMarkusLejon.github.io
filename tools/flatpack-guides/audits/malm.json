@@ -1,0 +1,670 @@
+{
+  "audited_on": "2026-10-22",
+  "scope": "Visually inspected every illustrated page of both official booklets; no physical assembly test.",
+  "product": {
+    "name": "MALM white3-drawer chest",
+    "article": "204.035.62",
+    "dimensions_cm": [
+      80,
+      48,
+      78
+    ],
+    "dimension_order": "width,depth,height",
+    "drawer_inside_cm": [
+      72,
+      43
+    ],
+    "drawer_pull_out_cm": 27,
+    "packages": 2,
+    "url": "https://www.ikea.com/de/en/p/malm-chest-of-3-drawers-white-20403562/"
+  },
+  "manual_choice": {
+    "decision": "BOTH booklets required;32-page case booklet explicitly redirects to drawer booklet atp31. They are NOT alternatives.",
+    "case": {
+      "id": "AA-2022888-8",
+      "pages": 32,
+      "date": "2025-12-10",
+      "url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf",
+      "local": "malm-AA-2022888-8.pdf",
+      "renders": "page-{page}.png",
+      "steps": 29
+    },
+    "drawers": {
+      "id": "AA-1971377-2",
+      "pages": 8,
+      "date": "2017-08-16",
+      "url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf",
+      "local": "malm-AA-1971377-2.pdf",
+      "renders": "supplement-{page}.png",
+      "steps": 9,
+      "repeat_count": 3
+    }
+  },
+  "preparation": {
+    "warning_pages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "tools_page": 6,
+    "helper_surface_page": 7,
+    "case_inventory_page": 8,
+    "drawer_inventory_page": 3,
+    "people": 2,
+    "tools": [
+      "Slotted screwdriver",
+      "Cross-head screwdriver",
+      "Bradawl/pointed tool",
+      "Hammer",
+      "Pencil",
+      "Spirit level",
+      "Step stool as shown",
+      "Drill with bit appropriate to supplied-kit wall branch"
+    ],
+    "surface": "Soft protective surface",
+    "safety": [
+      "Always anchor to wall.",
+      "Heaviest items in lowest drawer.",
+      "No TV or other heavy objects on top.",
+      "Children must not climb or hang on drawers.",
+      "Read all instructions; seek professional advice if wall type uncertain."
+    ]
+  },
+  "case_inventory": {
+    "118331": 14,
+    "101345": 18,
+    "117434 / 119030 / 120076": 14,
+    "155669": 8,
+    "10038685": 2,
+    "153548 / 158568": 6,
+    "101221": 30,
+    "106989": 2,
+    "127714": 2,
+    "109048": 2,
+    "109049": 2,
+    "100823": 4
+  },
+  "case_names": {
+    "118331": "cam bolt",
+    "101345": "wooden dowel",
+    "117434 / 119030 / 120076": "cam lock, alternative printed codes",
+    "155669": "plinth bracket screw",
+    "10038685": "plinth angle bracket",
+    "153548 / 158568": "push-in foot pad, alternative printed codes",
+    "101221": "back nails;inventory shows1bag;steps19-22 use1+1+1+27",
+    "106989": "slotted wall restraint",
+    "127714": "supplied wall plug;usedA2,B1,C0",
+    "109048": "long wall screw",
+    "109049": "short furniture screw for restraint",
+    "100823": "washer"
+  },
+  "prefitted_cabinet_runners": {
+    "count": 6,
+    "per_side": 3,
+    "codes_shown": [
+      "118788",
+      "118789"
+    ],
+    "note": "Already on side panels in step1. Do not invent installation or extra runner screws."
+  },
+  "drawer_inventory_totals_for_three": {
+    "118331": 12,
+    "117434 / 119030 / 120076": 12,
+    "101345": 12,
+    "110519": 12,
+    "100365": 18,
+    "105344": 6,
+    "115339": 6,
+    "118790 / 148601_pairs": 3,
+    "123833": 3
+  },
+  "drawer_names": {
+    "110519": "hammer-in drawer back fastener",
+    "100365": "runner screw",
+    "105344": "bottom brace screw",
+    "115339": "short round-head fitting;neutral name avoids unverified mechanism claim",
+    "118790 / 148601_pairs": "three pairs=six runners,alternative printed codes",
+    "123833": "metal centre bottom support brace"
+  },
+  "combined_main_counts": {
+    "cam_bolts": 26,
+    "cams": 26,
+    "dowels": 30,
+    "back_nails": 30
+  },
+  "case_steps": [
+    {
+      "step": 1,
+      "page": 9,
+      "title": "Side-panel cam bolts",
+      "description": "Fit five cam bolts into each side inner face. The three cabinet runners per side are already fitted.",
+      "parts": {
+        "118331": 10
+      },
+      "orientation": "Both sides flat, inner faces up.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=9"
+    },
+    {
+      "step": 2,
+      "page": 10,
+      "title": "Side foot pads",
+      "description": "Push two foot pads into the bottom edge of each side.",
+      "parts": {
+        "153548 / 158568": 4
+      },
+      "orientation": "Both sides flat.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=10"
+    },
+    {
+      "step": 3,
+      "page": 10,
+      "title": "Plinth brackets",
+      "description": "Attach the two angle brackets to the plinth with two screws per bracket.",
+      "parts": {
+        "10038685": 2,
+        "155669": 4
+      },
+      "orientation": "Separate narrow plinth laid flat.",
+      "tip": "2x refers to two two-screw bracket operations.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=10"
+    },
+    {
+      "step": 4,
+      "page": 10,
+      "title": "Plinth feet",
+      "description": "Fit the remaining two foot pads into the plinth lower edge.",
+      "parts": {
+        "153548 / 158568": 2
+      },
+      "orientation": "Separate prepared plinth.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=10"
+    },
+    {
+      "step": 5,
+      "page": 11,
+      "title": "Plinth to first side",
+      "description": "Stand the plinth on the first side at the bottom front and attach with two screws.",
+      "parts": {
+        "155669": 2
+      },
+      "orientation": "First side flat inner face up; plinth perpendicular.",
+      "tip": "Bracket/plinth faces inward as shown in correct inset, not outside.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=11"
+    },
+    {
+      "step": 6,
+      "page": 12,
+      "title": "Three front rails",
+      "description": "Put six dowels into the three narrow front rails, one at each end. Seat all three onto first side.",
+      "parts": {
+        "101345": 6
+      },
+      "orientation": "First side down. Three rails stand perpendicular across case width.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=12"
+    },
+    {
+      "step": 7,
+      "page": 12,
+      "title": "First rail cams",
+      "description": "Insert and turn three cams at the first-side rail joints.",
+      "parts": {
+        "117434 / 119030 / 120076": 3
+      },
+      "orientation": "First side down.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=12"
+    },
+    {
+      "step": 8,
+      "page": 13,
+      "title": "Bottom panel",
+      "description": "Fit four dowels, two at each end, and seat bottom panel onto first side.",
+      "parts": {
+        "101345": 4
+      },
+      "orientation": "First side down; bottom spans width.",
+      "tip": "Asymmetric orientation: single cam hole at each end is toward rear half. Do not reverse panel as in crossed-out inset.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=13"
+    },
+    {
+      "step": 9,
+      "page": 13,
+      "title": "First bottom cam",
+      "description": "Insert and turn one cam in the bottom at first-side joint.",
+      "parts": {
+        "117434 / 119030 / 120076": 1
+      },
+      "orientation": "First side down.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=13"
+    },
+    {
+      "step": 10,
+      "page": 14,
+      "title": "Lower rear support rail",
+      "description": "Fit four dowels, two at each end, then seat broad lower rear support rail onto first side.",
+      "parts": {
+        "101345": 4
+      },
+      "orientation": "First side down; rear support rail perpendicular to bottom.",
+      "tip": "This is a rigid structural rail, separate from thin full back fitted later.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=14"
+    },
+    {
+      "step": 11,
+      "page": 14,
+      "title": "First rear-rail cam",
+      "description": "Insert and turn one cam at first-side rear-rail joint.",
+      "parts": {
+        "117434 / 119030 / 120076": 1
+      },
+      "orientation": "First side down.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=14"
+    },
+    {
+      "step": 12,
+      "page": 15,
+      "title": "Second side",
+      "description": "Lower second side over all exposed dowels and bolts.",
+      "parts": {},
+      "orientation": "First side down; second side parallel above.",
+      "tip": "Inner face and pre-fitted runners face inward. Match finished edges.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=15"
+    },
+    {
+      "step": 13,
+      "page": 16,
+      "title": "Second plinth bracket",
+      "description": "Attach plinth bracket to second side with two screws.",
+      "parts": {
+        "155669": 2
+      },
+      "orientation": "Case on its first side.",
+      "tip": "1x refers to one two-screw bracket operation.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=16"
+    },
+    {
+      "step": 14,
+      "page": 16,
+      "title": "Remaining five side cams",
+      "description": "Fit five cams: three front rails, bottom, rear support rail.",
+      "parts": {
+        "117434 / 119030 / 120076": 5
+      },
+      "orientation": "Case on its first side.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=16"
+    },
+    {
+      "step": 15,
+      "page": 17,
+      "title": "Top cam bolts",
+      "description": "Fit four cam bolts in top underside.",
+      "parts": {
+        "118331": 4
+      },
+      "orientation": "Top separate, underside up.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=17"
+    },
+    {
+      "step": 16,
+      "page": 17,
+      "title": "Wall brackets on top",
+      "description": "Fit two wall brackets under top rear with one short furniture screw and washer each.",
+      "parts": {
+        "106989": 2,
+        "109049": 2,
+        "100823": 2
+      },
+      "orientation": "Top separate, underside up.",
+      "tip": "Slotted brackets extend rearward; long wall leg will point down after top is upright.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=17"
+    },
+    {
+      "step": 17,
+      "page": 18,
+      "title": "Fit the top",
+      "description": "With helper bring frame upright. Insert four dowels in upper side edges and lower top.",
+      "parts": {
+        "101345": 4
+      },
+      "orientation": "Case upright; top horizontal.",
+      "tip": "Match front/rear top orientation to correct inset, not crossed-out reversed top.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=18"
+    },
+    {
+      "step": 18,
+      "page": 19,
+      "title": "Lock top",
+      "description": "Insert and turn four cams, two in each upper side edge.",
+      "parts": {
+        "117434 / 119030 / 120076": 4
+      },
+      "orientation": "Case upright.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=19"
+    },
+    {
+      "step": 19,
+      "page": 20,
+      "title": "Position back and first nail",
+      "description": "With helper place case front down, rear up. Unfold two-section fibreboard back, align within rear outline and bracket cutouts; add first upper-corner nail.",
+      "parts": {
+        "101221": 1
+      },
+      "orientation": "Front down, rear up.",
+      "tip": "Hold edges aligned before nailing.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=20"
+    },
+    {
+      "step": 20,
+      "page": 21,
+      "title": "Second upper-corner nail",
+      "description": "Align opposite upper corner beside other wall bracket and add one nail.",
+      "parts": {
+        "101221": 1
+      },
+      "orientation": "Rear up.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=21"
+    },
+    {
+      "step": 21,
+      "page": 21,
+      "title": "Third-corner nail",
+      "description": "Hold third corner aligned and add one nail.",
+      "parts": {
+        "101221": 1
+      },
+      "orientation": "Rear up.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=21"
+    },
+    {
+      "step": 22,
+      "page": 22,
+      "title": "Remaining back nails",
+      "description": "Add remaining27 nails around perimeter.",
+      "parts": {
+        "101221": 27
+      },
+      "orientation": "Rear up.",
+      "tip": "Total30 nails. Do not invent nail spacing dimensions.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=22"
+    },
+    {
+      "step": 23,
+      "page": 23,
+      "title": "Mark wall and open back slots",
+      "description": "Raise with helper and position against wall. Slide both brackets to wall and tighten furniture screws. Mark wall through slots, then pierce matching thin-back openings with pointed tool.",
+      "parts": {},
+      "orientation": "Upright at wall; drawer openings empty.",
+      "tip": "Drawing shows BOTH pencil marking and opening fibreboard through bracket slots.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=23"
+    },
+    {
+      "step": 24,
+      "page": 24,
+      "title": "Move clear of wall",
+      "description": "Move empty case away from wall marks for drilling.",
+      "parts": {},
+      "orientation": "Upright away from wall.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=24"
+    },
+    {
+      "step": 25,
+      "page": 25,
+      "title": "Choose actual wall branch",
+      "description": "A solid: supplied plugs. B hollow: illustrated one fixing over stud and one in hollow wall. C solid wood: no plugs. Seek professional advice if uncertain.",
+      "parts": {},
+      "orientation": "Show original source wall diagrams, no universal 3D drill animation.",
+      "tip": "A8mm/70mm deep; B8mm/about30mm at hollow point; C3mm/about30mm, as supplied-kit source examples, never universal fixing prescriptions.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=25"
+    },
+    {
+      "step": 26,
+      "page": 27,
+      "title": "Drill chosen wall branch",
+      "description": "A p27: two holes. B p28: ONE hollow-point hole, with other fixing located at stud per drawing. C p30: two pilot holes.",
+      "parts": {},
+      "orientation": "Source-only drilling details.",
+      "tip": "Branch pagesA27,B28,C30; do not invent stud drilling dimensions.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=27"
+    },
+    {
+      "step": 27,
+      "page": 27,
+      "title": "Insert plugs if applicable",
+      "description": "A p27: two plugs. B p29: one plug. C: skip plugs entirely.",
+      "parts": {
+        "127714": "A2 / B1 / C0"
+      },
+      "orientation": "Source-only wall details.",
+      "tip": "Do not depict two generic hollow-wall anchors; one fixing is at a stud.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=27"
+    },
+    {
+      "step": 28,
+      "page": 31,
+      "title": "Secure both wall restraints",
+      "description": "Return empty chest to position and secure two brackets with two long screws and two remaining washers.",
+      "parts": {
+        "109048": 2,
+        "100823": 2
+      },
+      "orientation": "Upright anchored.",
+      "tip": "p31 sends reader to separate drawer booklet. Complete drawer1-9 before case29.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=31"
+    },
+    {
+      "step": 29,
+      "page": 32,
+      "title": "Top warning drawer",
+      "description": "Place the warning-labeled drawer at top. Engage tilted drawer then lower it level into runners.",
+      "parts": {},
+      "orientation": "Upright anchored; warning inside top drawer visible.",
+      "tip": "Overlaps drawer9/p8. Retain both source references without creating an extra drawer.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf#page=32"
+    }
+  ],
+  "drawer_steps": [
+    {
+      "step": 1,
+      "page": 4,
+      "title": "Drawer front bolts",
+      "description": "Fit four bolts into inner face of drawer front.",
+      "parts": {
+        "118331": 4
+      },
+      "orientation": "Front outer face down on protected surface.",
+      "tip": "Counts are for one drawer; repeat for all three.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=4",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 2,
+      "page": 4,
+      "title": "Fit drawer sides",
+      "description": "Insert four dowels, two per side, and seat sides onto front.",
+      "parts": {
+        "101345": 4
+      },
+      "orientation": "Front face down; sides perpendicular, bottom grooves aligned, cam holes outward.",
+      "tip": "One side carries warning label. Use that drawer at top.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=4",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 3,
+      "page": 5,
+      "title": "Lock front joints",
+      "description": "Fit and turn four cams, two per side.",
+      "parts": {
+        "117434 / 119030 / 120076": 4
+      },
+      "orientation": "Front face down.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=5",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 4,
+      "page": 5,
+      "title": "Slide drawer bottom",
+      "description": "Slide thin base through side grooves and fully into front groove.",
+      "parts": {},
+      "orientation": "Front face down; base enters from open rear.",
+      "tip": "",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=5",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 5,
+      "page": 6,
+      "title": "Fit drawer back",
+      "description": "Fit back across side rear ends and around bottom edge.",
+      "parts": {},
+      "orientation": "Front face down; back at far end.",
+      "tip": "Match lower-edge notch shown in inset for centre brace.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=6",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 6,
+      "page": 6,
+      "title": "Secure back and side fittings",
+      "description": "Tap four110519 fasteners into side/back joints, two each. Screw two115339 short round-head fittings near front ends of outer sides.",
+      "parts": {
+        "110519": 4,
+        "115339": 2
+      },
+      "orientation": "Front face down; access outer sides.",
+      "tip": "Use hammer for110519; screwdriver for115339.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=6",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 7,
+      "page": 7,
+      "title": "Fit drawer runners",
+      "description": "Turn drawer bottom up. Fit pair of runners with three screws each.",
+      "parts": {
+        "118790 / 148601_pairs": 1,
+        "100365": 6
+      },
+      "orientation": "Drawer upside down; rollers at rear.",
+      "tip": "Runner handedness and lower-edge alignment as source.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=7",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 8,
+      "page": 7,
+      "title": "Support drawer bottom",
+      "description": "Start screw at front underside location. Hook central brace over screw, turn/tighten, then seat brace at back notch and secure rear end with second screw.",
+      "parts": {
+        "123833": 1,
+        "105344": 2
+      },
+      "orientation": "Drawer upside down; brace spans FRONT TO BACK below centre of bottom.",
+      "tip": "Follow all five small numbered details. Brace is not a widthwise bar.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=7",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    },
+    {
+      "step": 9,
+      "page": 8,
+      "title": "Insert three drawers",
+      "description": "After all three are assembled, engage each at slight angle and lower level into cabinet runners.",
+      "parts": {},
+      "orientation": "Case upright and already anchored.",
+      "tip": "Warning-labeled drawer goes at top. This and main29 refer to same final insertion.",
+      "source_url": "https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf#page=8",
+      "repeat_count": 3,
+      "counts_scope": "one drawer"
+    }
+  ],
+  "boards": {
+    "case_rigid": [
+      "2sides",
+      "1top",
+      "1front plinth",
+      "3narrow front rails",
+      "1bottom panel",
+      "1lower rear support rail"
+    ],
+    "case_thin": [
+      "1rear fibreboard back folded into2 width sections, upper bracket cutouts"
+    ],
+    "per_drawer": [
+      "1front",
+      "2sides",
+      "1back",
+      "1thin bottom"
+    ],
+    "warning": "One labeled side in top drawer."
+  },
+  "wall_branch_sources": {
+    "chooser": [
+      25,
+      26
+    ],
+    "A": [
+      27
+    ],
+    "B": [
+      28,
+      29
+    ],
+    "C": [
+      30
+    ],
+    "completion": [
+      31
+    ],
+    "notes": [
+      "A has2supplied plugs; B shows one fixing aligned with stud and one supplied hollow-wall plug; C has no plugs.",
+      "Originalp25 dimensions are supplied-kit examples, not universal choices.",
+      "Keep actual drilling diagrams accessible; 3D wall only conveys bracket relationship."
+    ]
+  },
+  "recommended_order": [
+    "Preparation",
+    "Case1-28",
+    "Drawer1-8 repeated for3",
+    "Drawer9 +Case29 insertion",
+    "Finalcheck"
+  ],
+  "geometry_guidance": {
+    "axes": "Xwidth,Yheight,Zfront positive. Overall0.80x0.78x0.48metres.",
+    "floor": "Case5-14 on first side;17-18upright;19-22front down rear up;23+upright.",
+    "front_rails": "Three slender bars across front, not full-depth shelves.",
+    "rear_support": "Vertical broad rigid rail across lower rear, separate from thin full back.",
+    "back": "Two folded width sections;30nails around perimeter introduced1+1+1+27.",
+    "drawers": "Single example can show repeated steps with explicitx3. Bottom brace runs front-to-back centred below base. Final insertion all3, warning drawer top.",
+    "limits": "Panel thickness, hole locations, screw lengths, runner shapes and spacing are illustrative. Do not make manufacturing/drilling template."
+  },
+  "ambiguities": [
+    "Printed alternative part codes are not additive quantities.",
+    "Cabinet runners already fitted in drawings.",
+    "B wall branch only explicitly drills/plugs the hollow point; do not invent stud pilot dimensions.",
+    "Case29 and drawer9 overlap;retain both source refs.",
+    "Names for hardware are descriptive, not claimed official catalog names."
+  ]
+}

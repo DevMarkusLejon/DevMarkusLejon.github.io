@@ -64,3 +64,15 @@ The Spot derivatives were created with FFmpeg from the linked originals. The soc
 `images/billy-assembly.webp`: captured from this project's procedural Three.js BILLY model in exploded view, then encoded as WebP. Reconstructed illustration; not a product photograph or physical assembly test.
 
 `projects/billy/manual/`: the official [IKEA AA-1823127-9 PDF](https://www.ikea.com/se/en/assembly_instructions/billy-bookcase-white__AA-1823127-9-100.pdf), printed 2024-03-25, and rendered pages 5–13. Original IKEA diagrams retain their attribution. This guide covers the white 80 × 28 × 202 cm bookcase, article 002.638.50. All 14 numbered steps, fitting counts, the back-panel marking sequence and wall attachment are mapped in `tools/billy-guide/MANUAL-AUDIT.md`.
+
+## Flat-pack collection: LACK, POÄNG and MALM
+
+`images/lack-assembly.webp`, `poang-assembly.webp`, and `malm-assembly.webp`: captured from this project's procedural Three.js models in exploded view on 22 October 2026, then encoded as WebP. Reconstructed illustrations, not product photos or physical assembly tests.
+
+`projects/flatpack/manual/` retains official IKEA PDFs and rendered drawings with their attribution:
+
+- [LACK AA-2606170-1](https://www.ikea.com/se/en/assembly_instructions/lack-side-table-white__AA-2606170-1-100.pdf), 2025-02-27. White 55 × 55 cm table, 304.499.08. Full unnumbered diagram split into two guide actions; load and no-sitting warnings retained.
+- [POÄNG AA-2615392-2](https://www.ikea.com/se/en/assembly_instructions/poaeng-armchair-frame-birch-veneer__AA-2615392-2-100.pdf), 2026-01-29. Birch armchair frame, 813.058.07. All 11 numbered steps, the six-bolt check and cushion fitting.
+- [MALM case AA-2022888-8](https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-2022888-8-100.pdf), 2025-12-10, and [drawer AA-1971377-2](https://www.ikea.com/de/en/assembly_instructions/malm-chest-of-3-drawers-white__AA-1971377-2-2.pdf), 2017-08-16. White three-drawer chest, 204.035.62. Both booklets required: all 29 case steps and nine drawer steps, every wall branch and three repetitions of drawer assembly.
+
+Per-action sources, audit records and modelling limits are in `tools/flatpack-guides/`. Hole locations, panel thicknesses, curves and fitting geometry are illustrative. Wall drilling details remain in the original diagrams.

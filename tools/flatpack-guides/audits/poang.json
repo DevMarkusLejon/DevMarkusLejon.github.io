@@ -1,0 +1,166 @@
+{
+  "product": {
+    "name": "POÄNG armchair frame, birch veneer",
+    "article": "813.058.07",
+    "url": "https://www.ikea.com/se/en/p/poaeng-armchair-frame-birch-veneer-81305807/",
+    "dimensionsCm": { "width": 68, "depth": 82, "height": 94, "seatWidth": 55, "seatDepth": 49, "seatHeight": 36 },
+    "scope": "Current high-back bentwood armchair frame; not the rocking chair or low-back version. Cushion is a separate product."
+  },
+  "manual": {
+    "id": "AA-2615392-2",
+    "date": "2026-01-29",
+    "pages": 16,
+    "numberedSteps": 11,
+    "url": "https://www.ikea.com/se/en/assembly_instructions/poaeng-armchair-frame-birch-veneer__AA-2615392-2-100.pdf",
+    "sourceConfirmed": "Official Swedish product page Assembly and documents link checked 2026-10-22.",
+    "visualAudit": "Every page inspected; pages 5, 8, 10, 11 and 15 inspected again at 3x render resolution."
+  },
+  "preparation": {
+    "page": 2,
+    "tools": ["Included hex key 100001", "Flat-head screwdriver for orienting barrel nuts"],
+    "instructions": [
+      "Use hand tools; the power drill/driver is explicitly crossed out.",
+      "Assemble on a soft protective surface, not directly on a bare hard floor.",
+      "Contact IKEA if a part or instruction is unclear."
+    ],
+    "notShown": ["No hammer", "No explicit two-person requirement", "No numerical tightening torque"]
+  },
+  "inventory": [
+    { "code": "100001", "name": "Hex key", "count": 1, "page": 3 },
+    { "code": "100514", "name": "Barrel nut", "count": 4, "page": 3 },
+    { "code": "102319", "name": "Washer / spacer ring", "count": 2, "page": 3 },
+    { "code": "122606 / 122604", "name": "Long frame bolt", "count": 4, "page": 3 },
+    { "code": "146654 / 146655", "name": "Medium frame bolt", "count": 2, "page": 3 },
+    { "code": "123786", "name": "Flanged connector pin", "count": 2, "page": 3 },
+    { "code": "119046 / 123257", "name": "Back-crossbar screw", "count": 8, "page": 3 },
+    { "code": "120925 / 150450", "name": "Seat / back-to-seat screw", "count": 6, "page": 3 }
+  ],
+  "inventoryNotes": [
+    "Paired codes are alternatives printed for one hardware type. Do not add the two codes' quantities together.",
+    "123786 is a flanged connector pin at the seat front, not a threaded sleeve nut for the rear arm bolt.",
+    "There are 14 illustrated wood components: two back-side rails, four back crossbars, two seat-side rails, two seat crossbars, two continuous arm/leg/runner side frames and two lower stretchers. Seat fabric is separate from the optional upholstered cushion.",
+    "Page 4 shows protective foot/glide detail 122526 already at a runner; it is not listed as a loose counted part and no installation step is given. Do not invent a quantity or added installation operation."
+  ],
+  "steps": [
+    {
+      "number": 1, "page": 5,
+      "title": "Fit the four back crossbars",
+      "description": "Locate the tabbed ends of all four curved back crossbars in one curved back-side rail.",
+      "tip": "Check the bow against the correct orientation in the inset. The crossbar with the cushion fastening strip is second from the top and its strip faces the cushion side.",
+      "parts": [{"name":"Back crossbar","count":4},{"name":"First back-side rail","count":1}],
+      "orientation": "Backrest on its side, one back-side rail below; tabs enter its matching recesses. Do not reverse the crossbars' curvature."
+    },
+    {
+      "number": 2, "page": 5,
+      "title": "Close the backrest frame",
+      "description": "Lower the second curved back-side rail onto the four remaining crossbar tabs, matching all four holes.",
+      "tip": "Seat every end tab before fastening.",
+      "parts": [{"name":"Second back-side rail","count":1}]
+    },
+    {
+      "number": 3, "page": 6,
+      "title": "Fasten the first back-side rail",
+      "description": "Hold the rail down and install four back-crossbar screws using the included hex key.",
+      "tip": "Use 119046 / 123257. The longer 120925 / 150450 seat screws are explicitly crossed out for this step.",
+      "parts": [{"code":"119046 / 123257","count":4}],
+      "repeatedOperation": "One screw at each of four crossbar ends on this side."
+    },
+    {
+      "number": 4, "page": 6,
+      "title": "Turn and fasten the other rail",
+      "description": "Turn the backrest over and install the four remaining back-crossbar screws into the opposite side rail.",
+      "tip": "Hold the rail seated while fastening. Again use 119046 / 123257, not the seat screws.",
+      "parts": [{"code":"119046 / 123257","count":4}],
+      "repeatedOperation": "Repeat the four screws from step 3 on the opposite side. Eight back-crossbar screws are now used."
+    },
+    {
+      "number": 5, "page": 7,
+      "title": "Join the backrest to the seat sides",
+      "description": "Align the two seat-side rails and fabric seat section with the lower backrest joints. Join both side connections with two seat screws.",
+      "tip": "Use 120925 / 150450; the shorter back-crossbar screw is explicitly crossed out.",
+      "parts": [{"name":"Seat-side rail / fabric seat assembly","count":1},{"code":"120925 / 150450","count":2}],
+      "orientation": "The backrest and seat form the seated angle; the fabric faces upward in the finished chair."
+    },
+    {
+      "number": 6, "page": 8,
+      "title": "Slide the two seat crossbars into the fabric",
+      "description": "Slide a curved seat crossbar across the chair through each of the front and rear fabric sleeves. Locate their end tabs in the seat-side rail recesses.",
+      "tip": "The correct inset shows the centres bowing down with their ends raised. The opposite upward bow is crossed out.",
+      "parts": [{"name":"Seat crossbar","count":2}],
+      "repeatedOperation": "One bar at the front edge of the fabric and one at the rear edge. These run across the width, not along the sides."
+    },
+    {
+      "number": 7, "page": 9,
+      "title": "Secure the seat crossbars",
+      "description": "Fasten all four seat crossbar ends to the seat-side rails with four seat screws. Then turn the seat/back assembly onto its side as shown.",
+      "tip": "Use 120925 / 150450, not the shorter back-crossbar screw. Keep the fabric clear of each fastening hole.",
+      "parts": [{"code":"120925 / 150450","count":4}],
+      "repeatedOperation": "Two ends on each of two crossbars. All six seat screws are now used."
+    },
+    {
+      "number": 8, "page": 10,
+      "title": "Attach the first arm frame",
+      "description": "Insert one flanged pin into the front seat-side connection. Position the first continuous arm/leg/runner frame over it. At the rear arm-to-back connection, place a washer between the two wooden members and secure with one medium frame bolt.",
+      "tip": "Use 146654 / 146655 for the rear connection, not the longer stretcher bolt. The black washer belongs between the wood faces, not beneath the bolt head. The flanged pin is a separate front connection.",
+      "parts": [{"code":"123786","count":1},{"code":"102319","count":1},{"code":"146654 / 146655","count":1},{"name":"First arm/leg/runner side frame","count":1}],
+      "orientation": "Chair rests on one side; first outer side frame faces upward."
+    },
+    {
+      "number": 9, "page": 11,
+      "title": "Connect the two lower stretchers",
+      "description": "Seat the two lower crosspieces against the first side frame using their existing end dowels. Insert a barrel nut at each joint and use a flat-head screwdriver to align its threaded opening with a long frame bolt. Install the two long bolts.",
+      "tip": "Keep the barrel-nut access holes facing the illustrated accessible direction; the reversed rail orientation is crossed out. Use 122606 / 122604, not the shorter 146654 / 146655.",
+      "parts": [{"name":"Lower stretcher","count":2},{"code":"100514","count":2},{"code":"122606 / 122604","count":2}],
+      "repeatedOperation": "One joint for the front crosspiece below the seat, and one for the rear crosspiece near the floor."
+    },
+    {
+      "number": 10, "page": 12,
+      "title": "Turn and attach the second arm frame",
+      "description": "Turn the chair onto its assembled side. Fit the remaining flanged pin at the front seat connection and position the second side frame. Add the remaining washer between the rear arm and back-side rail, and fasten the rear connection with the remaining medium bolt.",
+      "tip": "Repeat step 8 on the other side: 146654 / 146655 at the rear joint, washer between wood faces, connector pin at the separate front joint.",
+      "parts": [{"code":"123786","count":1},{"code":"102319","count":1},{"code":"146654 / 146655","count":1},{"name":"Second arm/leg/runner side frame","count":1}],
+      "repeatedOperation": "Mirrors step 8, after turning the chair."
+    },
+    {
+      "number": 11, "page": 13,
+      "title": "Secure the remaining stretcher ends",
+      "description": "Seat both lower stretchers into the second side frame. Insert the two remaining barrel nuts and align their threaded openings. Install the two remaining long bolts through the side frame into the stretchers.",
+      "tip": "Use 122606 / 122604. Keep the barrel-nut holes accessible and line each nut up before turning the bolt.",
+      "parts": [{"code":"100514","count":2},{"code":"122606 / 122604","count":2}],
+      "repeatedOperation": "Mirrors step 9. All four barrel nuts and long stretcher bolts are now used."
+    }
+  ],
+  "afterNumberedSteps": [
+    {
+      "page": 14,
+      "title": "Stand upright and check six frame bolts",
+      "description": "With the chair upright, check/tighten the six large side-frame bolts using the included hex key: the arm-to-back bolt, front stretcher bolt and rear lower stretcher bolt on each side.",
+      "tip": "This page is part of the complete manual sequence even though it has no printed step number. It adds no hardware and gives no torque or repeat-check time interval.",
+      "existingFasteners": {"146654 / 146655":2,"122606 / 122604":4}
+    },
+    {
+      "page": 15,
+      "title": "Fit the compatible cushion",
+      "description": "Place the cushion over the seat and back. Align its rear fastening strip with the strip on the second back crossbar and press them together as shown.",
+      "tip": "The manual explicitly illustrates this cushion fastening; it does not show ties, buckles or straps. Use the instructions supplied with the actual cushion if its design differs.",
+      "parts": [{"name":"Compatible POÄNG seat/back cushion, sold separately","count":1}]
+    }
+  ],
+  "geometryGuidance": [
+    "Use the published 68 x 82 x 94 cm overall envelope. Seat width55cm, depth49cm, height36cm are product specs, not drilled part dimensions.",
+    "There are two continuous bentwood outer side frames. Each flows from the rear arm attachment forward over the arm, down at the front, and rearward along the floor runner; do not close these into rectangular loops.",
+    "Backrest has two shaped side rails and four widthwise curved crossbars. The cushion fastening strip is on the front of the second crossbar from the top.",
+    "Seat has two front-to-back side rails, a fabric deck and two widthwise curved crossbars inside front/rear fabric sleeves. The crossbar centres bow down in the manual's correct inset.",
+    "Lower stretchers connect the side frames at two distinct heights: under the front of the seat and near the rear of the floor runners.",
+    "Each arm-side rear attachment has a medium bolt and a washer between the wood faces. Its front seat support is a separate flanged pin; do not render the pin as the nut receiving that rear bolt.",
+    "Each lower stretcher end uses existing dowels for registration and a long bolt passing into a barrel nut. The dowels are not loose inventory and no separate dowel-fitting step appears.",
+    "The original PDF supplies no numerical hole locations, precise bends, bolt lengths, hole diameters, material thickness or torque. Label reconstruction as illustrative; never use it as a drilling template.",
+    "Show p14 final six-bolt check distinctly from p15 cushion placement. Neither is a newly numbered IKEA step12 or13."
+  ],
+  "limitsAndAmbiguities": [
+    "Back-crossbar curvature is visually explicit but has no text naming front/back concavity. Preserve the diagram and make the reference inset accessible rather than imposing an unsupported exact angle.",
+    "No assembly time is stated in the booklet; any time estimate must be labeled an estimate or omitted.",
+    "The official product page says tests simulate people up to110kg, not that110kg is a universal maximum load. Avoid converting that test statement into a load limit.",
+    "Part122526 is a pre-fitted glide/foot detail on p4 with no separate counted installation step."
+  ]
+}

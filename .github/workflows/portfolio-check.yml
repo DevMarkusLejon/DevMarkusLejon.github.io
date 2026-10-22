@@ -10,6 +10,7 @@ on:
       - "projects/**"
       - "grids/**"
       - "tools/grids/**"
+      - "tools/flatpack-guides/**"
       - "assets/**"
       - "favicon.svg"
       - "robots.txt"
@@ -25,6 +26,7 @@ on:
       - "projects/**"
       - "grids/**"
       - "tools/grids/**"
+      - "tools/flatpack-guides/**"
       - "assets/**"
       - "favicon.svg"
       - "robots.txt"
@@ -44,6 +46,16 @@ jobs:
           python-version: "3.12"
       - name: Check local links and assets
         run: python scripts/check-portfolio.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tools/flatpack-guides/package-lock.json
+      - name: Check flat-pack source coverage and model states
+        working-directory: tools/flatpack-guides
+        run: |
+          npm ci
+          npm run check
       - name: Check Grids browser bundle
         run: python scripts/check-grids.py
       - name: Check Grids JavaScript syntax

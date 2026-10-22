@@ -1,0 +1,18 @@
+{
+  "name": "flatpack-assembly-studies",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node check-guides.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build --base=/projects/flatpack/ --outDir=../../projects/flatpack --emptyOutDir",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1"
+  }
+}

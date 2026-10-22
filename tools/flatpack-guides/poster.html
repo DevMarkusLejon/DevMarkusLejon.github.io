@@ -1,0 +1,12 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Flat-pack poster capture</title><style>body{margin:0;background:radial-gradient(ellipse at 48% 37%,#f4f4eb 0%,#e8ece4 70%,#e0e6da 100%)}canvas{display:block;width:1000px;height:678px}</style></head><body><canvas id="poster" aria-label="Assembly model for the project poster"></canvas><script type="module">
+import { createStage } from './stage.js';
+const slug = new URLSearchParams(location.search).get('guide') || 'lack';
+const models = import.meta.glob('./models/*.js');
+const { createModel } = await models[`./models/${slug}.js`]();
+const stage = createStage(document.querySelector('canvas'), api => {
+  const model = createModel(api), camera = model.camera;
+  model.camera = index => { const c = camera(index); c.position.sub(c.target).multiplyScalar(1.22).add(c.target); return c; };
+  return model;
+});
+stage.setExploded(true);
+</script></body></html>
