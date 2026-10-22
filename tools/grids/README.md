@@ -51,3 +51,13 @@ remain fidelity comparisons. See `godot/ASSETS.md` for artwork provenance.
 
 Publishing uses the portfolio's existing GitHub Pages deployment from `main`.
 Changes in this folder do not affect older projects in other repositories.
+
+## Verification, 22 October 2026
+
+The live HTTPS page was tested in Chromium with two independent browser
+contexts. A commander move, end turn, AI response and reset in the first
+context did not change the second context's turn, revision or unit position.
+The tested live page had zero console errors and warnings. The underlying
+engine's 67 tests passed, and CI checks the portfolio links, deployed bundle
+consistency and worker JavaScript syntax. A full browser match to victory and
+mobile/Safari have not been validated.
