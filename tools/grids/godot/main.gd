@@ -38,6 +38,18 @@ var sound_sequence = 0
 var windup_voice: AudioStreamPlayer
 var speed_control: OptionButton
 var autoplay_speed = 1.0
+var watch_button: Button
+var step_button: Button
+var pending_paused: Variant = null
+var requested_paused = false
+var info_label: RichTextLabel
+var log_window: Window
+var log_label: RichTextLabel
+var log_watch_button: Button
+var log_step_button: Button
+var hovered_unit = -1
+var inspected_unit = -1
+var hovered_card = ""
 
 
 func _ready() -> void:
@@ -65,6 +77,17 @@ func _ready() -> void:
 	_button("Dra föremål", Vector2(42, 476), Vector2(248, 46), func(): _send_kind("draw_item"))
 	_button("Avsluta tur", Vector2(42, 552), Vector2(248, 52), func(): _send_kind("end"))
 	autoplay_button = _button("Se AI mot AI", Vector2(42, 620), Vector2(248, 42), _toggle_autoplay)
+	watch_button = _button("Pausa båda", Vector2(42, 673), Vector2(119, 36), _toggle_watch_pause)
+	step_button = _button("Nästa drag", Vector2(171, 673), Vector2(119, 36), _single_step)
+	watch_button.add_theme_font_size_override("font_size", 14)
+	step_button.add_theme_font_size_override("font_size", 14)
+	info_label = RichTextLabel.new()
+	info_label.position = Vector2(42, 240)
+	info_label.size = Vector2(248, 165)
+	info_label.add_theme_font_size_override("normal_font_size", 14)
+	info_label.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(info_label)
+	_build_log()
 	sound_button = _button("Ljud: på", Vector2(42, 798), Vector2(248, 30), _toggle_sound)
 	speed_control = OptionButton.new()
 	speed_control.position = Vector2(785, 74)
@@ -76,6 +99,7 @@ func _ready() -> void:
 	speed_control.tooltip_text = "Tempo för AI mot AI: pauser och animationer. AI:ns betänketid kan variera."
 	speed_control.item_selected.connect(func(index):
 		autoplay_speed = AUTOPLAY_SPEEDS[index]
+		_save_preferences()
 		_publish_debug()
 	)
 	add_child(speed_control)
@@ -85,6 +109,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var moving = false
+	var current_hover = -1
+	for unit in state.get("units", []):
+		if Rect2(BOARD + Vector2(unit.x, unit.y) * CELL, Vector2.ONE * CELL).has_point(get_global_mouse_position()):
+			current_hover = int(unit.id)
+	if current_hover != hovered_unit:
+		hovered_unit = current_hover
+		_refresh_info()
+		moving = true
 	if not combat.is_empty():
 		combat_age += delta * _playback_speed()
 		moving = true
@@ -134,6 +166,7 @@ func _fetch(path: String, body: Variant = null) -> void:
 	if busy:
 		return
 	busy = true
+	_update_autoplay_button()
 	error_text = ""
 	queue_redraw()
 	if browser_bridge != null:
@@ -163,6 +196,11 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 		if parsed.has("state"):
 			state = parsed.state
 	else:
+		if state.is_empty() and parsed.has("preferences"):
+			autoplay_speed = float(parsed.preferences.get("speed", 1))
+			speed_control.select(AUTOPLAY_SPEEDS.find(autoplay_speed))
+			sound_enabled = parsed.preferences.get("sound", true)
+			sound_button.text = "Ljud: på" if sound_enabled else "Ljud: av"
 		var event: Dictionary = parsed.get("event", {})
 		if not state.is_empty() and int(parsed.revision) > int(state.revision) and _has_combat(event):
 			combat = event
@@ -185,8 +223,14 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 	selected_unit = -1
 	selected_card = ""
 	_rebuild_hand()
+	_refresh_info()
+	_refresh_log()
 	if pending_autoplay == null:
 		requested_autoplay = state.get("autoplay", false)
+	if not state.get("autoplay", false) or state.get("terminal", false):
+		pending_paused = null
+	if pending_paused == null:
+		requested_paused = state.get("paused", false)
 	_update_autoplay_button()
 	_publish_debug()
 	queue_redraw()
@@ -195,6 +239,12 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 		pending_autoplay = null
 		if not state.get("terminal", false):
 			_fetch("/api/autoplay", {"revision": int(state.revision), "enabled": enabled})
+			return
+	if pending_paused != null:
+		var paused: bool = pending_paused
+		pending_paused = null
+		if state.get("autoplay", false) and not state.get("terminal", false):
+			_fetch("/api/pause", {"revision": int(state.revision), "paused": paused})
 			return
 	if code == 200 and error_text.is_empty() and _ai_controls_turn() and not state.get("terminal", false):
 		_continue_ai(int(state.revision))
@@ -223,7 +273,27 @@ func _wait_for_playback(seconds: float, revision: int = -1) -> bool:
 
 
 func _ai_controls_turn() -> bool:
-	return int(state.get("player", 0)) == 1 or state.get("autoplay", false)
+	return (int(state.get("player", 0)) == 1 or state.get("autoplay", false)) and not (state.get("autoplay", false) and state.get("paused", false))
+
+
+func _human_controls_turn() -> bool:
+	return int(state.get("player", 0)) == 0 and not state.get("autoplay", false) and not state.get("terminal", false)
+
+
+func _toggle_watch_pause() -> void:
+	if not state.get("autoplay", false) or state.get("terminal", false):
+		return
+	requested_paused = not requested_paused
+	if busy:
+		pending_paused = requested_paused
+		_update_autoplay_button()
+	else:
+		_fetch("/api/pause", {"revision": int(state.revision), "paused": requested_paused})
+
+
+func _single_step() -> void:
+	if state.get("autoplay", false) and state.get("paused", false) and not state.get("terminal", false):
+		_fetch("/api/ai-step", {"revision": int(state.revision), "single_step": true})
 
 
 func _toggle_autoplay() -> void:
@@ -242,7 +312,18 @@ func _update_autoplay_button() -> void:
 	if pending_autoplay != null:
 		autoplay_button.text = "Startar…" if pending_autoplay else "Pausar efter draget…"
 	else:
-		autoplay_button.text = "Ta över blått / pausa" if state.get("autoplay", false) else "Se AI mot AI"
+		autoplay_button.text = "Ta över blått" if state.get("autoplay", false) else "Se AI mot AI"
+	watch_button.text = "Väntar…" if pending_paused != null else ("Fortsätt" if state.get("paused", false) else "Pausa båda")
+	watch_button.disabled = not state.get("autoplay", false) or state.get("terminal", false)
+	step_button.disabled = busy or not state.get("autoplay", false) or not state.get("paused", false) or state.get("terminal", false)
+	log_watch_button.text = watch_button.text
+	log_watch_button.disabled = watch_button.disabled
+	log_step_button.disabled = step_button.disabled
+
+
+func _save_preferences() -> void:
+	if browser_bridge != null:
+		browser_bridge.setPreferences(JSON.stringify({"speed": autoplay_speed, "sound": sound_enabled}))
 
 
 func _toggle_sound() -> void:
@@ -251,6 +332,7 @@ func _toggle_sound() -> void:
 	if not sound_enabled:
 		for voice in voices:
 			voice.stop()
+	_save_preferences()
 	_publish_debug()
 
 
@@ -308,6 +390,107 @@ func _publish_debug() -> void:
 		JavaScriptBridge.eval("window.gridsCombat = " + JSON.stringify({"active": not combat.is_empty(), "event": combat}))
 		JavaScriptBridge.eval("window.gridsAudio = " + JSON.stringify({"enabled": sound_enabled, "played": sound_sequence}))
 		JavaScriptBridge.eval("window.gridsAutoplaySpeed = " + str(autoplay_speed))
+		JavaScriptBridge.eval("window.gridsInspector = " + JSON.stringify({"unit_id": _info_unit_id(), "card": hovered_card, "text": info_label.text}))
+
+
+func _build_log() -> void:
+	log_window = Window.new()
+	log_window.title = "Draglogg · senaste 500 handlingarna"
+	log_window.unresizable = true
+	log_window.visible = false
+	log_window.close_requested.connect(func(): log_window.hide())
+	add_child(log_window)
+	log_label = RichTextLabel.new()
+	log_label.position = Vector2(18, 16)
+	log_label.size = Vector2(784, 480)
+	log_label.add_theme_font_size_override("normal_font_size", 16)
+	log_label.selection_enabled = true
+	log_window.add_child(log_label)
+	_button("Senaste draget", Vector2(18, 514), Vector2(190, 38), func(): log_label.get_v_scroll_bar().value = log_label.get_v_scroll_bar().max_value, log_window)
+	log_watch_button = _button("Pausa båda", Vector2(218, 514), Vector2(150, 38), _toggle_watch_pause, log_window)
+	log_step_button = _button("Nästa drag", Vector2(378, 514), Vector2(150, 38), _single_step, log_window)
+	_button("Stäng", Vector2(612, 514), Vector2(190, 38), func(): log_window.hide(), log_window)
+	var open_button = _button("Draglogg", Vector2(1150, 54), Vector2(108, 44), _toggle_log)
+	open_button.add_theme_font_size_override("font_size", 14)
+	open_button.tooltip_text = "Öppna draglogg (L). Pausa båda och använd Nästa drag för att granska AI-spelet."
+
+
+func _toggle_log() -> void:
+	if log_window.visible:
+		log_window.hide()
+	else:
+		_refresh_log(true)
+		log_window.popup_centered(Vector2i(820, 570))
+
+
+func _refresh_log(latest = false) -> void:
+	var bar = log_label.get_v_scroll_bar()
+	var previous = bar.value
+	var follow = latest or bar.value + bar.page >= bar.max_value - 4
+	var lines = PackedStringArray()
+	var warning = str(state.get("storage", {}).get("warning", ""))
+	if not warning.is_empty():
+		lines.append("SPARNING: " + warning + "\n")
+	for entry in state.get("history", []):
+		var side = "Blå" if int(entry.player) == 0 else "Röd"
+		lines.append("Tur " + str(int(entry.turn)) + " · " + side + " · " + str(entry.description))
+		for detail in entry.details:
+			lines.append("    " + str(detail))
+		lines.append("")
+	log_label.text = "\n".join(lines) if not lines.is_empty() else "Inga drag ännu. Spela själv eller starta AI mot AI.\n\nPausa båda AI-spelarna och välj Nästa drag för en handling i taget."
+	_restore_log_scroll(previous, follow)
+
+
+func _restore_log_scroll(previous: float, follow: bool) -> void:
+	await get_tree().process_frame
+	var bar = log_label.get_v_scroll_bar()
+	bar.value = bar.max_value if follow else previous
+
+
+func _info_unit_id() -> int:
+	return hovered_unit if hovered_unit >= 0 else inspected_unit
+
+
+func _refresh_info() -> void:
+	var card = hovered_card
+	if card.is_empty() and hovered_unit < 0:
+		card = selected_card
+	if not card.is_empty() and state.has("unit_specs"):
+		var lines = str(state.labels.get(card, card)) + " · " + str(int(state.costs.get(card, 0))) + " handlingar\n"
+		var spec: Dictionary = state.unit_specs.get(card, {})
+		if not spec.is_empty():
+			lines += "Liv: " + str(int(spec.hp)) + " · Skada/helar: " + str(int(spec.damage)) + "\n"
+			lines += "Flytt: " + str(int(spec.walk)) + " · Räckvidd: " + str(int(spec.attack_range)) + "\n"
+		info_label.text = lines + str(state.get("card_info", {}).get(card, ""))
+	else:
+		var unit = _unit_by_id(_info_unit_id())
+		if unit.is_empty() or not state.has("unit_specs"):
+			info_label.text = "1  Välj en blå enhet eller ett kort.\n2  Klicka på en markerad ruta.\n3  Avsluta turen när du är klar.\n\nPeka på kort eller enheter för info.\nHögerklick fäster enhetsinfo.\nL: draglogg · mellanslag: AI-paus\nN: nästa AI-drag i pausläge"
+		else:
+			var spec: Dictionary = state.unit_specs[unit.kind]
+			var statuses = PackedStringArray()
+			if int(unit.frozen) > 0: statuses.append("Fryst " + str(int(unit.frozen)) + " turbyten")
+			if int(unit.burning) > 0: statuses.append("Brinner " + str(int(unit.burning)) + " turbyten")
+			if unit.get("charmed_from") != null: statuses.append("Tillfälligt kontrollerad")
+			if not unit.attacked.is_empty():
+				if unit.kind == "freeze_mage": statuses.append("Har använt sin attack denna tur")
+				else: statuses.append(("Har helat " if unit.kind == "healer" else "Har attackerat ") + str(unit.attacked.size()) + " mål")
+			var side = "Blå" if int(unit.owner) == 0 else "Röd"
+			var text = str(state.labels.get(unit.kind, unit.kind.capitalize())) + " #" + str(int(unit.id)) + " · " + side + "\n"
+			text += "Liv " + str(int(unit.hp)) + "/" + str(int(unit.max_hp)) + " · Rustning " + str(int(unit.armor)) + "\n"
+			text += ("Helar " if spec.attack_type == "healer" else "Skada ") + str(int(unit.damage)) + " · Flytt " + str(int(spec.walk)) + " · Räckvidd " + str(int(spec.attack_range)) + "\n"
+			text += "Handlingar: flytt 1 · " + ("hela 1" if spec.attack_type == "healer" else ("attack 1–2" if spec.attack_type == "melee" else "attack 1")) + "\n"
+			text += (" · ".join(statuses) + "\n") if not statuses.is_empty() else "Ingen aktiv statuseffekt\n"
+			text += str(state.get("card_info", {}).get(unit.kind, "")) + "\nGrönt: flytt · rött: grundräckvidd"
+			info_label.text = text
+	_publish_debug()
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_L: _toggle_log()
+		elif event.keycode == KEY_SPACE: _toggle_watch_pause()
+		elif event.keycode == KEY_N: _single_step()
 
 
 func _has_combat(event: Dictionary) -> bool:
@@ -380,6 +563,7 @@ func _draw_combat() -> void:
 
 
 func _rebuild_hand() -> void:
+	hovered_card = ""
 	for child in cards.get_children():
 		cards.remove_child(child)
 		child.queue_free()
@@ -394,14 +578,23 @@ func _rebuild_hand() -> void:
 		button.expand_icon = true
 		button.icon_max_width = 36
 		button.add_theme_font_size_override("font_size", 13)
-		button.tooltip_text = label
+		button.tooltip_text = label + " · " + str(int(state.costs.get(card, 0))) + " handlingar\n" + str(state.get("card_info", {}).get(card, ""))
+		button.mouse_entered.connect(func():
+			hovered_card = card
+			_refresh_info()
+		)
+		button.mouse_exited.connect(func():
+			if hovered_card == card: hovered_card = ""
+			_refresh_info()
+		)
 
 
 func _select_card(card: String) -> void:
-	if busy or state.get("terminal", false) or _ai_controls_turn():
+	if busy or not _human_controls_turn():
 		return
 	selected_card = card
 	selected_unit = -1
+	_refresh_info()
 	for action in state.get("legal", []):
 		if action.card == card and action.kind == "item" and int(action.target_id) < 0 and int(action.x) < 0:
 			_send_action(action)
@@ -410,7 +603,7 @@ func _select_card(card: String) -> void:
 
 
 func _send_kind(kind: String) -> void:
-	if busy or _ai_controls_turn():
+	if busy or not _human_controls_turn():
 		return
 	for action in state.get("legal", []):
 		if action.kind == kind:
@@ -454,10 +647,20 @@ func _selected_actions() -> Array:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventMouseButton or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT or busy or _ai_controls_turn():
+	if not event is InputEventMouseButton or not event.pressed or event.button_index not in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:
 		return
 	var cell = Vector2i((get_global_mouse_position() - BOARD) / CELL)
 	if not Rect2(BOARD, Vector2(10 * CELL, 7 * CELL)).has_point(get_global_mouse_position()):
+		return
+	var clicked = -1
+	for unit in state.get("units", []):
+		if int(unit.x) == cell.x and int(unit.y) == cell.y:
+			clicked = int(unit.id)
+	if clicked >= 0 or event.button_index == MOUSE_BUTTON_RIGHT:
+		inspected_unit = clicked
+		_refresh_info()
+		queue_redraw()
+	if event.button_index == MOUSE_BUTTON_RIGHT or busy or not _human_controls_turn():
 		return
 	for action in _selected_actions():
 		if _action_cell(action) == cell:
@@ -486,12 +689,11 @@ func _draw() -> void:
 	_text("ORIGINAL ART · NEW ENGINE", Vector2(44, 110), 12, MINT)
 	_text("Plains", Vector2(42, 179), 28)
 	_text("AI spelar båda sidor." if state.get("autoplay", false) else "Du spelar blått mot AI:n.", Vector2(42, 212), 17, MUTED)
-	_text("1   Välj en enhet eller ett kort", Vector2(42, 280), 15)
-	_text("2   Klicka på en markerad ruta", Vector2(42, 312), 15)
-	_text("3   Avsluta turen när du är klar", Vector2(42, 344), 15)
-	_text("Korten visar sin actionkostnad.", Vector2(42, 380), 14, MUTED)
-	_text("DIN EGEN MATCH" if browser_bridge != null else "LOKAL PROTOTYP", Vector2(42, 698), 12, MINT)
-	_text("En egen match i varje flik" if browser_bridge != null else "Godot + Python · standardlek", Vector2(42, 722), 14, MUTED)
+	var storage: Dictionary = state.get("storage", {})
+	var save_message = "Sparas i den här fliken" if browser_bridge != null else "Lokal prototyp"
+	if not str(storage.get("saved_at", "")).is_empty(): save_message = "Autosparad · egen match i fliken"
+	if not str(storage.get("warning", "")).is_empty(): save_message = "Sparmeddelande · öppna draglogg"
+	_text(save_message, Vector2(42, 733), 12, RED if not str(storage.get("warning", "")).is_empty() else MINT)
 	_text("Grafik och ljud från Grids 1.5.7", Vector2(42, 858), 12, MUTED)
 	_text("PLAY   /   PLAINS 10 × 7", Vector2(352, 60), 13, MINT)
 	_text("AUTO PLAY-TEMPO", Vector2(785, 60), 13, MUTED)
@@ -499,6 +701,7 @@ func _draw() -> void:
 	var turn_title = "AI:ns tur" if int(state.get("player", 0)) == 1 else "Din tur"
 	if state.get("autoplay", false):
 		turn_title = "Blå AI spelar" if int(state.get("player", 0)) == 0 else "Röd AI spelar"
+		if state.get("paused", false): turn_title = "AI pausat"
 	_text("Matchen är slut" if state.get("terminal", false) else turn_title, Vector2(352, 104), 30)
 	_text("TUR " + str(int(state.get("turn", 1))), Vector2(1040, 99), 16, MUTED)
 	for index in range(7):
@@ -528,6 +731,14 @@ func _draw() -> void:
 		_picture("log", Rect2(BOARD + Vector2(log[0], log[1]) * CELL, Vector2.ONE * CELL))
 	for fire in state.get("fires", []):
 		draw_circle(BOARD + (Vector2(fire[0], fire[1]) + Vector2.ONE * 0.5) * CELL, 26, Color(1, 0.4, 0.1, 0.7))
+	var inspected = _unit_by_id(_info_unit_id())
+	if not inspected.is_empty() and selected_card.is_empty() and hovered_card.is_empty():
+		for cell in inspected.get("move_cells", []):
+			var rect = Rect2(BOARD + Vector2(cell[0], cell[1]) * CELL + Vector2.ONE * 5, Vector2.ONE * (CELL - 10))
+			draw_rect(rect, Color(MINT, 0.10))
+		for cell in inspected.get("range_cells", []):
+			var rect = Rect2(BOARD + Vector2(cell[0], cell[1]) * CELL + Vector2.ONE * 6, Vector2.ONE * (CELL - 12))
+			draw_rect(rect, Color(RED, 0.7), false, 1)
 	for action in _selected_actions():
 		var cell = _action_cell(action)
 		if cell.x >= 0 and cell.y >= 0:
