@@ -10,6 +10,7 @@ const MINT = Color("a6e4ba")
 const AI_STEP_PAUSE = 1.0
 const HIT_TIME = 0.42
 const COMBAT_TIME = 1.35
+const AUTOPLAY_SPEEDS = [0.5, 1.0, 2.0, 4.0]
 
 var state: Dictionary = {}
 var selected_unit: int = -1
@@ -35,6 +36,8 @@ var voices: Array[AudioStreamPlayer] = []
 var sound_enabled = true
 var sound_sequence = 0
 var windup_voice: AudioStreamPlayer
+var speed_control: OptionButton
+var autoplay_speed = 1.0
 
 
 func _ready() -> void:
@@ -63,6 +66,19 @@ func _ready() -> void:
 	_button("Avsluta tur", Vector2(42, 552), Vector2(248, 52), func(): _send_kind("end"))
 	autoplay_button = _button("Se AI mot AI", Vector2(42, 620), Vector2(248, 42), _toggle_autoplay)
 	sound_button = _button("Ljud: på", Vector2(42, 798), Vector2(248, 30), _toggle_sound)
+	speed_control = OptionButton.new()
+	speed_control.position = Vector2(785, 74)
+	speed_control.size = Vector2(220, 36)
+	speed_control.add_theme_font_size_override("font_size", 16)
+	for label in ["0,5× · Lugnt", "1× · Normalt", "2× · Snabbt", "4× · Mycket snabbt"]:
+		speed_control.add_item(label)
+	speed_control.select(1)
+	speed_control.tooltip_text = "Tempo för AI mot AI: pauser och animationer. AI:ns betänketid kan variera."
+	speed_control.item_selected.connect(func(index):
+		autoplay_speed = AUTOPLAY_SPEEDS[index]
+		_publish_debug()
+	)
+	add_child(speed_control)
 	_button("Ny match", Vector2(42, 748), Vector2(248, 42), func(): _fetch("/api/reset", {}))
 	_fetch("/api/state")
 
@@ -70,7 +86,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var moving = false
 	if not combat.is_empty():
-		combat_age += delta
+		combat_age += delta * _playback_speed()
 		moving = true
 	for unit in state.get("units", []):
 		var id_value = int(unit.id)
@@ -81,7 +97,7 @@ func _process(delta: float) -> void:
 			display_positions[id_value] = target
 		var current: Vector2 = display_positions[id_value]
 		if current.distance_to(target) > 0.2:
-			display_positions[id_value] = current.lerp(target, minf(delta * 12, 1))
+			display_positions[id_value] = current.lerp(target, minf(delta * 12 * _playback_speed(), 1))
 			moving = true
 		else:
 			display_positions[id_value] = target
@@ -156,11 +172,11 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 			selected_card = ""
 			_publish_debug()
 			queue_redraw()
-			await get_tree().create_timer(HIT_TIME).timeout
+			await _wait_for_playback(HIT_TIME)
 			state = parsed
 			_impact_sound(event)
 			_publish_debug()
-			await get_tree().create_timer(COMBAT_TIME - HIT_TIME).timeout
+			await _wait_for_playback(COMBAT_TIME - HIT_TIME)
 			combat = {}
 		state = parsed
 		if int(state.turn) == 1 and int(state.actions_left) == 7:
@@ -185,10 +201,25 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 
 
 func _continue_ai(revision: int) -> void:
-	await get_tree().create_timer(AI_STEP_PAUSE).timeout
+	if not await _wait_for_playback(AI_STEP_PAUSE, revision):
+		return
 	# A reset during the pause invalidates this pending AI step.
 	if not busy and int(state.get("revision", -1)) == revision and _ai_controls_turn():
 		_fetch("/api/ai-step", {"revision": revision})
+
+
+func _playback_speed() -> float:
+	return autoplay_speed if state.get("autoplay", false) else 1.0
+
+
+func _wait_for_playback(seconds: float, revision: int = -1) -> bool:
+	var remaining = seconds
+	while remaining > 0:
+		await get_tree().process_frame
+		if revision >= 0 and int(state.get("revision", -1)) != revision:
+			return false
+		remaining -= get_process_delta_time() * _playback_speed()
+	return true
 
 
 func _ai_controls_turn() -> bool:
@@ -276,6 +307,7 @@ func _publish_debug() -> void:
 		JavaScriptBridge.eval("window.gridsPrototypeState = " + JSON.stringify(state))
 		JavaScriptBridge.eval("window.gridsCombat = " + JSON.stringify({"active": not combat.is_empty(), "event": combat}))
 		JavaScriptBridge.eval("window.gridsAudio = " + JSON.stringify({"enabled": sound_enabled, "played": sound_sequence}))
+		JavaScriptBridge.eval("window.gridsAutoplaySpeed = " + str(autoplay_speed))
 
 
 func _has_combat(event: Dictionary) -> bool:
@@ -462,6 +494,7 @@ func _draw() -> void:
 	_text("En egen match i varje flik" if browser_bridge != null else "Godot + Python · standardlek", Vector2(42, 722), 14, MUTED)
 	_text("Grafik och ljud från Grids 1.5.7", Vector2(42, 858), 12, MUTED)
 	_text("PLAY   /   PLAINS 10 × 7", Vector2(352, 60), 13, MINT)
+	_text("AUTO PLAY-TEMPO", Vector2(785, 60), 13, MUTED)
 	var actions_left = int(state.get("actions_left", 7))
 	var turn_title = "AI:ns tur" if int(state.get("player", 0)) == 1 else "Din tur"
 	if state.get("autoplay", false):

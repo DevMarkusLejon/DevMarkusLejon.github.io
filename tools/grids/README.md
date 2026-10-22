@@ -41,6 +41,13 @@ if necessary. Mode changes invalidate pending timers through the revision and
 clear the search cache. Reset returns to manual play, and terminal matches stop.
 The mode belongs only to this tab's isolated worker.
 
+The `AUTO PLAY-TEMPO` selector offers 0.5x, 1x (default), 2x and 4x.
+It scales the pause, movement and combat presentation only while auto play is
+active. Changes apply during the current wait or animation. Human play and
+normal red AI replies retain their original pace; audio pitch and the AI's
+search/rules are unchanged. Actual search time still depends on the position.
+The selected speed remains through a match reset and defaults to 1x on reload.
+
 Original WAV effects play at cast and impact times. Melee hits use the original
 target materials; arrows, ice, meteors, fire and healing have their own effects.
 `Ljud: på/av` stops active sounds and mutes future ones without stopping play.
@@ -89,11 +96,15 @@ damage, armor, lethal hits, healing, fire damage and auto play takeover,
 both AI sides, pause, stale mode requests, reset and terminal stopping. Chromium render fixtures
 cover melee, arrows, ice, healing, death, armor, logs, meteors and burning.
 These fixtures use real engine results with the browser bridge stubbed for
-repeatable visual inspection. AI pauses remain one second after animation.
+repeatable visual inspection. Normal-speed AI pauses remain one second after animation.
 An actual worker match continued from a partial human turn through blue and red
 AI turns, preserved the takeover position and stopped on pause. Browser checks
 also cover quick start/pause clicks and reset cancellation. Web Audio metering
 confirmed nonzero output for original effects and zero output for a muted hit.
+Controlled browser timing checks measured AI pauses of about 2.0, 1.0, 0.52
+and 0.27 seconds at 0.5x/1x/2x/4x. Combat lasted about 2.74 seconds at 0.5x
+and 0.36 seconds at 4x; a manual attack retained its 1.35-second duration.
+A speed change during an attack immediately changed its remaining duration.
 CI checks links, deployed bundle
 consistency and worker JavaScript syntax. A full browser match to victory and
 mobile/Safari have not been validated.
