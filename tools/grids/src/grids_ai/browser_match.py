@@ -23,6 +23,7 @@ class PrototypeMatch:
         self.revision = 0
         self.game = new_game(self.seed)
         self.message = "Välj din blå commander eller ett kort."
+        self.ai_cells = []
 
     def state(self) -> dict:
         game = self.game
@@ -37,6 +38,7 @@ class PrototypeMatch:
             "terminal": game.terminal,
             "winner": game.winner,
             "message": self.message,
+            "ai_cells": self.ai_cells,
             "units": [asdict(unit) | {"attacked": sorted(unit.attacked)} for unit in game.units.values()],
             "blocks": [[x, y] for x, y in sorted(PLAIN_BLOCKS)],
             "logs": [[x, y, hp] for (x, y), hp in game.logs.items()],
@@ -62,12 +64,29 @@ class PrototypeMatch:
         self.message = self.game.describe_action(action)
         self.game.step(action)
         self.revision += 1
-        moves = 0
-        while not self.game.terminal and self.game.current_player == 1:
-            self.game.step(self.agent.choose_action(self.game))
-            moves += 1
-        if moves:
-            self.message = f"AI:n gjorde {moves} handlingar. Din tur."
+        self.ai_cells = []
+        self._finish_message()
+
+    def ai_step(self, payload: dict) -> None:
+        if payload.get("revision") != self.revision:
+            raise ValueError("Matchen har ändrats. Välj draget igen.")
+        if self.game.terminal or self.game.current_player != 1:
+            raise ValueError("Det är inte AI:ns tur.")
+        action = self.agent.choose_action(self.game)
+        self.message = "AI: " + self.game.describe_action(action)
+        self.ai_cells = []
+        for unit_id in (action.unit_id, action.target_id):
+            if unit_id in self.game.units:
+                self.ai_cells.append(list(self.game.units[unit_id].pos))
+        if action.x >= 0 and action.y >= 0:
+            self.ai_cells.append([action.x, action.y])
+        if action.kind == "attack_log":
+            self.ai_cells.append([int(value) for value in action.card.split(",")])
+        self.game.step(action)
+        self.revision += 1
+        self._finish_message()
+
+    def _finish_message(self) -> None:
         if self.game.terminal:
             self.message = "Du vann!" if self.game.winner == 0 else "AI:n vann!" if self.game.winner == 1 else "Oavgjort."
 
@@ -78,4 +97,5 @@ class PrototypeMatch:
         self.agent._value_cache.clear()
         self.revision += 1
         self.message = "Ny match. Välj din commander eller ett kort."
+        self.ai_cells = []
 

@@ -21,6 +21,8 @@ def handle_browser_request(path, body):
     try:
         if path == "/api/action":
             browser_match.act(json.loads(body))
+        elif path == "/api/ai-step":
+            browser_match.ai_step(json.loads(body))
         elif path == "/api/reset":
             browser_match.reset()
         elif path != "/api/state":

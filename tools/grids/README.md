@@ -21,6 +21,11 @@ The game files, Python engine bundle and model are hosted here on GitHub Pages.
 AI calculation runs off the UI thread. It still uses the same Python rules
 and search implementation; this is not a second JavaScript rules engine.
 
+AI turns advance through `/api/ai-step`, one action per worker request. The
+Godot client waits one second between board updates, marks the affected cells
+and shows the action description. Human moves are blocked during the AI turn;
+resetting during a pause invalidates the pending step using the match revision.
+
 ## Source and build
 
 - `godot/`: editable Godot project, GDScript, original PNGs and browser bridge.
@@ -58,6 +63,8 @@ The live HTTPS page was tested in Chromium with two independent browser
 contexts. A commander move, end turn, AI response and reset in the first
 context did not change the second context's turn, revision or unit position.
 The tested live page had zero console errors and warnings. The underlying
-engine's 67 tests passed, and CI checks the portfolio links, deployed bundle
+engine's 69 tests passed, including individual AI steps and reset invalidation.
+Browser timing checks confirmed roughly one second between AI updates and
+that resetting during a pause leaves the new match untouched. CI checks links, deployed bundle
 consistency and worker JavaScript syntax. A full browser match to victory and
 mobile/Safari have not been validated.

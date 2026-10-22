@@ -7,6 +7,7 @@ const MUTED = Color("8fa5ad")
 const BLUE = Color("70bfff")
 const RED = Color("f28c79")
 const MINT = Color("a6e4ba")
+const AI_STEP_PAUSE = 1.0
 
 var state: Dictionary = {}
 var selected_unit: int = -1
@@ -127,6 +128,15 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 	_rebuild_hand()
 	_publish_debug()
 	queue_redraw()
+	if code == 200 and error_text.is_empty() and int(state.get("player", 0)) == 1 and not state.get("terminal", false):
+		_continue_ai(int(state.revision))
+
+
+func _continue_ai(revision: int) -> void:
+	await get_tree().create_timer(AI_STEP_PAUSE).timeout
+	# A reset during the pause invalidates this pending AI step.
+	if not busy and int(state.get("revision", -1)) == revision and int(state.get("player", 0)) == 1:
+		_fetch("/api/ai-step", {"revision": revision})
 
 
 func _publish_debug() -> void:
@@ -153,7 +163,7 @@ func _rebuild_hand() -> void:
 
 
 func _select_card(card: String) -> void:
-	if busy or state.get("terminal", false):
+	if busy or state.get("terminal", false) or int(state.get("player", 0)) == 1:
 		return
 	selected_card = card
 	selected_unit = -1
@@ -165,6 +175,8 @@ func _select_card(card: String) -> void:
 
 
 func _send_kind(kind: String) -> void:
+	if busy or int(state.get("player", 0)) == 1:
+		return
 	for action in state.get("legal", []):
 		if action.kind == kind:
 			_send_action(action)
@@ -207,7 +219,7 @@ func _selected_actions() -> Array:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventMouseButton or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT or busy:
+	if not event is InputEventMouseButton or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT or busy or int(state.get("player", 0)) == 1:
 		return
 	var cell = Vector2i((get_global_mouse_position() - BOARD) / CELL)
 	if not Rect2(BOARD, Vector2(10 * CELL, 7 * CELL)).has_point(get_global_mouse_position()):
@@ -248,7 +260,8 @@ func _draw() -> void:
 	_text("Grafik från originalets Grids 1.5.7", Vector2(42, 833), 12, MUTED)
 	_text("PLAY   /   PLAINS 10 × 7", Vector2(352, 60), 13, MINT)
 	var actions_left = int(state.get("actions_left", 7))
-	_text("Din tur" if not state.get("terminal", false) else "Matchen är slut", Vector2(352, 104), 30)
+	var turn_title = "AI:ns tur" if int(state.get("player", 0)) == 1 else "Din tur"
+	_text("Matchen är slut" if state.get("terminal", false) else turn_title, Vector2(352, 104), 30)
 	_text("TUR " + str(int(state.get("turn", 1))), Vector2(1040, 99), 16, MUTED)
 	for index in range(7):
 		draw_circle(Vector2(575 + index * 25, 94), 7, MINT if index < actions_left else Color("28424e"))
@@ -284,6 +297,10 @@ func _draw() -> void:
 			var color = RED if action.kind in ["attack", "attack_log"] else MINT
 			draw_rect(rect, Color(color, 0.2))
 			draw_rect(rect, color, false, 2)
+	for cell in state.get("ai_cells", []):
+		var rect = Rect2(BOARD + Vector2(cell[0], cell[1]) * CELL + Vector2.ONE * 3, Vector2.ONE * (CELL - 6))
+		draw_rect(rect, Color(RED, 0.2))
+		draw_rect(rect, RED, false, 3)
 	for unit in state.get("units", []):
 		var target_pos = BOARD + Vector2(unit.x, unit.y) * CELL
 		var pos: Vector2 = display_positions.get(int(unit.id), target_pos)
@@ -306,7 +323,7 @@ func _draw() -> void:
 	for y in range(7):
 		_text(str(y + 1), BOARD + Vector2(-20, y * CELL + CELL / 2 + 5), 12, MUTED)
 	var message: String = state.get("message", "Ansluter till Python-motorn…")
-	if busy:
+	if busy and int(state.get("player", 0)) != 1:
 		message = "Bearbetar draget… AI:n tänker vid turbyte."
 	elif not error_text.is_empty():
 		message = error_text
