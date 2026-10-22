@@ -31,6 +31,21 @@ The client reveals the new board at impact, then animates knockback, HP bars,
 rising red damage numbers, blue armor loss and green healing numbers. Lethal
 hits retain their full damage value while the HP bar stops at zero.
 
+## Auto play and sound
+
+`Se AI mot AI` hands the current blue turn to the search AI without changing
+units, cards, remaining actions or the turn. Both sides then advance one action
+at a time using the same model and rules. `Ta över blått / pausa` gives blue back
+to the human after an in-flight action finishes; red completes its current turn
+if necessary. Mode changes invalidate pending timers through the revision and
+clear the search cache. Reset returns to manual play, and terminal matches stop.
+The mode belongs only to this tab's isolated worker.
+
+Original WAV effects play at cast and impact times. Melee hits use the original
+target materials; arrows, ice, meteors, fire and healing have their own effects.
+`Ljud: på/av` stops active sounds and mutes future ones without stopping play.
+See `godot/audio/ASSETS.md` for exact source files and timing.
+
 ## Source and build
 
 - `godot/`: editable Godot project, GDScript, original PNGs and browser bridge.
@@ -56,7 +71,7 @@ There is no `/api` server to start. Use HTTP, not `file://`.
 Plains and the default deck; movement, deployment, combat, healing, items,
 draws, end turn and AI replies. Desktop/landscape controls. Basic movement
 interpolation, melee lunges/rotation, arrow flight, casting, impact particles,
-ice, healing and meteor effects use original artwork. Sound remains future work. Pixel-level
+ice, healing and meteor effects use original artwork and sound effects. Pixel-level
 line-of-sight, corner knockback, overlapping ice and fire along animated paths
 remain fidelity comparisons. See `godot/ASSETS.md` for artwork provenance.
 
@@ -69,11 +84,16 @@ The live HTTPS page was tested in Chromium with two independent browser
 contexts. A commander move, end turn, AI response and reset in the first
 context did not change the second context's turn, revision or unit position.
 The tested live page had zero console errors and warnings. The underlying
-engine's 75 tests passed, including individual AI steps, reset invalidation,
-damage, armor, lethal hits, healing and fire damage. Chromium render fixtures
+engine's 83 tests passed, including individual AI steps, reset invalidation,
+damage, armor, lethal hits, healing, fire damage and auto play takeover,
+both AI sides, pause, stale mode requests, reset and terminal stopping. Chromium render fixtures
 cover melee, arrows, ice, healing, death, armor, logs, meteors and burning.
 These fixtures use real engine results with the browser bridge stubbed for
 repeatable visual inspection. AI pauses remain one second after animation.
+An actual worker match continued from a partial human turn through blue and red
+AI turns, preserved the takeover position and stopped on pause. Browser checks
+also cover quick start/pause clicks and reset cancellation. Web Audio metering
+confirmed nonzero output for original effects and zero output for a muted hit.
 CI checks links, deployed bundle
 consistency and worker JavaScript syntax. A full browser match to victory and
 mobile/Safari have not been validated.

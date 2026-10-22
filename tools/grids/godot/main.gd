@@ -26,6 +26,15 @@ var browser_bridge: JavaScriptObject
 var browser_callback: JavaScriptObject
 var combat: Dictionary = {}
 var combat_age = 0.0
+var autoplay_button: Button
+var sound_button: Button
+var pending_autoplay: Variant = null
+var requested_autoplay = false
+var sounds: Dictionary = {}
+var voices: Array[AudioStreamPlayer] = []
+var sound_enabled = true
+var sound_sequence = 0
+var windup_voice: AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -33,6 +42,12 @@ func _ready() -> void:
 		art[name] = load("res://assets/" + name + ".png")
 	for name in ["arrow", "ice_spike", "spark", "healing_effect", "meteor", "blood"]:
 		art[name] = load("res://assets/" + name + ".png")
+	for name in ["attack_freeze", "arrow_hit", "hit_metal", "hit_wood", "hit_stone", "meteor_hit", "freeze", "fire", "heal", "wood_break"]:
+		sounds[name] = load("res://audio/" + name + ".wav")
+	for index in range(8):
+		var voice = AudioStreamPlayer.new()
+		add_child(voice)
+		voices.append(voice)
 	if OS.has_feature("web"):
 		base_url = str(JavaScriptBridge.eval("window.location.origin"))
 		browser_bridge = JavaScriptBridge.get_interface("GridsBridge")
@@ -46,6 +61,8 @@ func _ready() -> void:
 	_button("Dra enhet", Vector2(42, 420), Vector2(248, 46), func(): _send_kind("draw_unit"))
 	_button("Dra föremål", Vector2(42, 476), Vector2(248, 46), func(): _send_kind("draw_item"))
 	_button("Avsluta tur", Vector2(42, 552), Vector2(248, 52), func(): _send_kind("end"))
+	autoplay_button = _button("Se AI mot AI", Vector2(42, 620), Vector2(248, 42), _toggle_autoplay)
+	sound_button = _button("Ljud: på", Vector2(42, 798), Vector2(248, 30), _toggle_sound)
 	_button("Ny match", Vector2(42, 748), Vector2(248, 42), func(): _fetch("/api/reset", {}))
 	_fetch("/api/state")
 
@@ -134,12 +151,14 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 		if not state.is_empty() and int(parsed.revision) > int(state.revision) and _has_combat(event):
 			combat = event
 			combat_age = 0.0
+			_attack_sound(event)
 			selected_unit = -1
 			selected_card = ""
 			_publish_debug()
 			queue_redraw()
 			await get_tree().create_timer(HIT_TIME).timeout
 			state = parsed
+			_impact_sound(event)
 			_publish_debug()
 			await get_tree().create_timer(COMBAT_TIME - HIT_TIME).timeout
 			combat = {}
@@ -150,23 +169,113 @@ func _received(result: int, code: int, _headers: PackedStringArray, body: Packed
 	selected_unit = -1
 	selected_card = ""
 	_rebuild_hand()
+	if pending_autoplay == null:
+		requested_autoplay = state.get("autoplay", false)
+	_update_autoplay_button()
 	_publish_debug()
 	queue_redraw()
-	if code == 200 and error_text.is_empty() and int(state.get("player", 0)) == 1 and not state.get("terminal", false):
+	if pending_autoplay != null and not state.is_empty():
+		var enabled: bool = pending_autoplay
+		pending_autoplay = null
+		if not state.get("terminal", false):
+			_fetch("/api/autoplay", {"revision": int(state.revision), "enabled": enabled})
+			return
+	if code == 200 and error_text.is_empty() and _ai_controls_turn() and not state.get("terminal", false):
 		_continue_ai(int(state.revision))
 
 
 func _continue_ai(revision: int) -> void:
 	await get_tree().create_timer(AI_STEP_PAUSE).timeout
 	# A reset during the pause invalidates this pending AI step.
-	if not busy and int(state.get("revision", -1)) == revision and int(state.get("player", 0)) == 1:
+	if not busy and int(state.get("revision", -1)) == revision and _ai_controls_turn():
 		_fetch("/api/ai-step", {"revision": revision})
+
+
+func _ai_controls_turn() -> bool:
+	return int(state.get("player", 0)) == 1 or state.get("autoplay", false)
+
+
+func _toggle_autoplay() -> void:
+	if state.is_empty() or state.get("terminal", false):
+		return
+	requested_autoplay = not requested_autoplay
+	var enabled = requested_autoplay
+	if busy:
+		pending_autoplay = enabled
+		_update_autoplay_button()
+	else:
+		_fetch("/api/autoplay", {"revision": int(state.revision), "enabled": enabled})
+
+
+func _update_autoplay_button() -> void:
+	if pending_autoplay != null:
+		autoplay_button.text = "Startar…" if pending_autoplay else "Pausar efter draget…"
+	else:
+		autoplay_button.text = "Ta över blått / pausa" if state.get("autoplay", false) else "Se AI mot AI"
+
+
+func _toggle_sound() -> void:
+	sound_enabled = not sound_enabled
+	sound_button.text = "Ljud: på" if sound_enabled else "Ljud: av"
+	if not sound_enabled:
+		for voice in voices:
+			voice.stop()
+	_publish_debug()
+
+
+func _play_sound(name: String, volume: float = -10.0) -> AudioStreamPlayer:
+	if not sound_enabled:
+		return null
+	var voice = voices[sound_sequence % voices.size()]
+	sound_sequence += 1
+	voice.stream = sounds[name]
+	voice.volume_db = volume
+	voice.play()
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("window.gridsLastSound = " + JSON.stringify({"name": name, "sequence": sound_sequence}))
+	return voice
+
+
+func _attack_sound(event: Dictionary) -> void:
+	if event.unit_kind == "freeze_mage" and event.kind in ["attack", "attack_log"]:
+		_play_sound("attack_freeze")
+	elif event.card == "meteorite":
+		windup_voice = _play_sound("fire", -22)
+
+
+func _impact_sound(event: Dictionary) -> void:
+	if event.card == "meteorite":
+		if windup_voice != null:
+			windup_voice.stop()
+			windup_voice = null
+		_play_sound("meteor_hit")
+	elif event.card == "freeze":
+		_play_sound("freeze")
+	elif event.card == "fireball" or (event.kind == "end" and not event.changes.is_empty()):
+		_play_sound("fire", -22)
+	elif event.kind == "heal":
+		_play_sound("heal")
+	elif event.kind in ["attack", "attack_log"]:
+		if event.unit_kind == "archer":
+			_play_sound("arrow_hit")
+		elif not event.changes.is_empty():
+			var target: Dictionary = event.changes[0]
+			var material = "metal"
+			if target.kind == "commander":
+				material = "stone"
+			elif target.kind in ["archer", "freeze_mage", "healer", "log"]:
+				material = "wood"
+			_play_sound("hit_" + material)
+		for change in event.changes:
+			if change.kind == "log" and change.dead:
+				_play_sound("wood_break")
 
 
 func _publish_debug() -> void:
 	if OS.has_feature("web"):
 		JavaScriptBridge.eval("window.gridsPrototypeState = " + JSON.stringify(state))
 		JavaScriptBridge.eval("window.gridsCombat = " + JSON.stringify({"active": not combat.is_empty(), "event": combat}))
+		JavaScriptBridge.eval("window.gridsAudio = " + JSON.stringify({"enabled": sound_enabled, "played": sound_sequence}))
 
 
 func _has_combat(event: Dictionary) -> bool:
@@ -257,7 +366,7 @@ func _rebuild_hand() -> void:
 
 
 func _select_card(card: String) -> void:
-	if busy or state.get("terminal", false) or int(state.get("player", 0)) == 1:
+	if busy or state.get("terminal", false) or _ai_controls_turn():
 		return
 	selected_card = card
 	selected_unit = -1
@@ -269,7 +378,7 @@ func _select_card(card: String) -> void:
 
 
 func _send_kind(kind: String) -> void:
-	if busy or int(state.get("player", 0)) == 1:
+	if busy or _ai_controls_turn():
 		return
 	for action in state.get("legal", []):
 		if action.kind == kind:
@@ -313,7 +422,7 @@ func _selected_actions() -> Array:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventMouseButton or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT or busy or int(state.get("player", 0)) == 1:
+	if not event is InputEventMouseButton or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT or busy or _ai_controls_turn():
 		return
 	var cell = Vector2i((get_global_mouse_position() - BOARD) / CELL)
 	if not Rect2(BOARD, Vector2(10 * CELL, 7 * CELL)).has_point(get_global_mouse_position()):
@@ -344,17 +453,19 @@ func _draw() -> void:
 	_text("GRIDS", Vector2(42, 82), 42)
 	_text("ORIGINAL ART · NEW ENGINE", Vector2(44, 110), 12, MINT)
 	_text("Plains", Vector2(42, 179), 28)
-	_text("Du spelar blått mot AI:n.", Vector2(42, 212), 17, MUTED)
+	_text("AI spelar båda sidor." if state.get("autoplay", false) else "Du spelar blått mot AI:n.", Vector2(42, 212), 17, MUTED)
 	_text("1   Välj en enhet eller ett kort", Vector2(42, 280), 15)
 	_text("2   Klicka på en markerad ruta", Vector2(42, 312), 15)
 	_text("3   Avsluta turen när du är klar", Vector2(42, 344), 15)
 	_text("Korten visar sin actionkostnad.", Vector2(42, 380), 14, MUTED)
 	_text("DIN EGEN MATCH" if browser_bridge != null else "LOKAL PROTOTYP", Vector2(42, 698), 12, MINT)
 	_text("En egen match i varje flik" if browser_bridge != null else "Godot + Python · standardlek", Vector2(42, 722), 14, MUTED)
-	_text("Grafik från originalets Grids 1.5.7", Vector2(42, 833), 12, MUTED)
+	_text("Grafik och ljud från Grids 1.5.7", Vector2(42, 858), 12, MUTED)
 	_text("PLAY   /   PLAINS 10 × 7", Vector2(352, 60), 13, MINT)
 	var actions_left = int(state.get("actions_left", 7))
 	var turn_title = "AI:ns tur" if int(state.get("player", 0)) == 1 else "Din tur"
+	if state.get("autoplay", false):
+		turn_title = "Blå AI spelar" if int(state.get("player", 0)) == 0 else "Röd AI spelar"
 	_text("Matchen är slut" if state.get("terminal", false) else turn_title, Vector2(352, 104), 30)
 	_text("TUR " + str(int(state.get("turn", 1))), Vector2(1040, 99), 16, MUTED)
 	for index in range(7):
@@ -455,7 +566,7 @@ func _draw() -> void:
 	elif selected_unit >= 0:
 		message = "Blå markering: vald enhet · grönt: flytta / hela · rött: attackera"
 	_text(message.left(100), Vector2(352, 731), 15, MINT if error_text.is_empty() else RED)
-	_text("DIN HAND", Vector2(352, 751), 11, MUTED)
+	_text("BLÅ AI:S HAND" if state.get("autoplay", false) else "DIN HAND", Vector2(352, 751), 11, MUTED)
 
 
 func draw_ellipse_shadow(center: Vector2) -> void:

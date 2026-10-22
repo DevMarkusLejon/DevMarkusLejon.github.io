@@ -25,15 +25,17 @@ class PrototypeMatch:
         self.message = "Välj din blå commander eller ett kort."
         self.ai_cells = []
         self.event = {}
+        self.autoplay = False
 
     def state(self) -> dict:
         game = self.game
-        legal = game.legal_actions() if game.current_player == 0 else []
+        legal = game.legal_actions() if game.current_player == 0 and not self.autoplay else []
         labels = {name: CARD_LABELS.get(name, name.replace("_", " ").title()) for name in UNIT_SPECS | ITEM_COSTS}
         return {
             "revision": self.revision,
             "ruleset": RULESET_VERSION,
             "player": game.current_player,
+            "autoplay": self.autoplay,
             "turn": game.half_turn,
             "actions_left": game.actions_left,
             "terminal": game.terminal,
@@ -56,7 +58,7 @@ class PrototypeMatch:
     def act(self, payload: dict) -> None:
         if payload.get("revision") != self.revision:
             raise ValueError("Matchen har ändrats. Välj draget igen.")
-        if self.game.terminal or self.game.current_player != 0:
+        if self.game.terminal or self.game.current_player != 0 or self.autoplay:
             raise ValueError("Det är inte din tur.")
         action_id = payload.get("action_id")
         legal = self.game.legal_actions()
@@ -71,10 +73,11 @@ class PrototypeMatch:
     def ai_step(self, payload: dict) -> None:
         if payload.get("revision") != self.revision:
             raise ValueError("Matchen har ändrats. Välj draget igen.")
-        if self.game.terminal or self.game.current_player != 1:
+        if self.game.terminal or (self.game.current_player != 1 and not self.autoplay):
             raise ValueError("Det är inte AI:ns tur.")
         action = self.agent.choose_action(self.game)
-        self.message = "AI: " + self.game.describe_action(action)
+        side = "Blå AI" if self.game.current_player == 0 else "Röd AI"
+        self.message = (side if self.autoplay else "AI") + ": " + self.game.describe_action(action)
         self.ai_cells = []
         for unit_id in (action.unit_id, action.target_id):
             if unit_id in self.game.units:
@@ -84,6 +87,23 @@ class PrototypeMatch:
         if action.kind == "attack_log":
             self.ai_cells.append([int(value) for value in action.card.split(",")])
         self._step(action)
+        self._finish_message()
+
+    def set_autoplay(self, payload: dict) -> None:
+        if payload.get("revision") != self.revision:
+            raise ValueError("Matchen har ändrats. Försök igen.")
+        enabled = payload.get("enabled")
+        if type(enabled) is not bool:
+            raise ValueError("Välj om auto play ska vara på eller av.")
+        if enabled and self.game.terminal:
+            raise ValueError("Matchen är slut. Starta en ny match.")
+        self.autoplay = enabled
+        self.agent._cached.clear()
+        self.agent._value_cache.clear()
+        self.revision += 1
+        self.event = {}
+        self.ai_cells = []
+        self.message = "AI mot AI fortsätter härifrån." if enabled else "Du styr blått igen."
         self._finish_message()
 
     def _step(self, action) -> None:
@@ -128,7 +148,10 @@ class PrototypeMatch:
 
     def _finish_message(self) -> None:
         if self.game.terminal:
-            self.message = "Du vann!" if self.game.winner == 0 else "AI:n vann!" if self.game.winner == 1 else "Oavgjort."
+            if self.autoplay:
+                self.message = "Blå AI vann!" if self.game.winner == 0 else "Röd AI vann!" if self.game.winner == 1 else "Oavgjort."
+            else:
+                self.message = "Du vann!" if self.game.winner == 0 else "AI:n vann!" if self.game.winner == 1 else "Oavgjort."
 
     def reset(self) -> None:
         self.seed += 1
@@ -139,4 +162,5 @@ class PrototypeMatch:
         self.message = "Ny match. Välj din commander eller ett kort."
         self.ai_cells = []
         self.event = {}
+        self.autoplay = False
 

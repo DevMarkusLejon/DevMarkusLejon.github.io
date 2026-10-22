@@ -17,5 +17,5 @@ These are Godot approximations of the original animations, not frame-exact
 replays of GameMaker's delta-dependent code.
 
 The board colors, selection outlines, labels, health bars and interface panels
-are drawn in Godot. Original sound and additional sprite animation frames
-have not been included.
+are drawn in Godot. Original sound effects are documented in `audio/ASSETS.md`.
+Additional sprite animation frames have not been included.
