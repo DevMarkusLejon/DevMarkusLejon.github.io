@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>When should you stop drawing cards in Ticket to Ride: Europe? | Markus Lejon</title>
+  <meta name="description" content="Replay the same Ticket to Ride: Europe deal two ways, inspect the players’ hands, and see when seven extra turns of drawing paid off across 24,576 simulated games.">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="When should you stop drawing cards in Ticket to Ride: Europe?">
+  <meta property="og:description" content="Two ways to play the same hand, tested in 24,576 games. Watch the draws and track claims turn by turn.">
+  <meta property="og:image" content="https://devmarkuslejon.github.io/projects/ticket-to-ride/wait-comparison.png">
+  <meta property="og:url" content="https://devmarkuslejon.github.io/projects/ticket-to-ride/">
+  <link rel="canonical" href="https://devmarkuslejon.github.io/projects/ticket-to-ride/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles.css">
+  <style>
+    #replay {border-top:1px solid var(--line);padding-block:2.5rem}
+    #replay h2 {font-size:clamp(1.75rem,3vw,2.5rem);margin-bottom:.6rem}
+    #replay p {max-width:72ch;line-height:1.65}
+    #game {display:block;width:100%;height:55rem;border:1px solid var(--line);background:var(--white);margin-top:1.2rem}
+    .case-body strong {color:var(--ink)}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><nav class="nav-shell wrap" aria-label="Primary navigation">
+    <a class="brand" href="../../"><span class="brand-mark" aria-hidden="true">ML<span>.</span></span><span>Markus Lejon</span></a>
+    <div class="nav-links"><a href="../../#projects">Work</a><a href="../../#contact">Let's talk ↗</a></div>
+  </nav></header>
+  <main id="main" class="wrap"><article>
+    <header class="case-header">
+      <a class="text-link" href="../../#projects">← All projects</a>
+      <p class="eyebrow">Game simulation · Markus Lejon · 7 November 2026</p>
+      <h1>When should you stop drawing cards in <em>Ticket to Ride: Europe?</em></h1>
+      <p class="hero-lede">On turn 19, you have seven white cards. Frankfurt–Paris costs three. Do you put trains on the board now, or keep drawing while the other players build?</p>
+      <div class="hero-actions"><a class="button primary" href="#replay">Play the deal ↓</a><a class="text-link" href="#results">See the tournament results ↓</a></div>
+    </header>
+    <section class="case-layout" aria-labelledby="experiment">
+      <h2 id="experiment">One deal, two decisions</h2>
+      <div class="case-body">
+        <p>A <a href="https://www.youtube.com/watch?v=E05MAjOyEaI">strategy tournament on the US board</a> inspired this experiment. The Europe board changes the decision. A ferry needs locomotives, a tunnel can cost extra cards, and a station can rescue a ticket when another player claims the track you need.</p>
+        <p>The simulated player, <strong>Hoard &amp; Finish</strong>, keeps two destination tickets. One version draws for its first 18 turns before trying to connect those cities. The other waits 25. Each pair starts with the same shuffle, tickets, seat and opponents. Once a player makes a different choice, the market and the other players’ options can change too.</p>
+        <p>In the first deal against three Regulars, the shorter-wait player spends three white cards on Frankfurt–Paris and keeps four white. Switch to 25 at the same move: the player takes a pink card, sees a new market, then takes an orange. All seven white cards stay in hand.</p>
+      </div>
+    </section>
+    <section id="replay" aria-labelledby="watch">
+      <h2 id="watch">Watch the choice play out</h2>
+      <p>The replay opens on that decision. Switch the wait to compare the same move, or step forward to see each pick and payment. <strong>All four hands</strong> opens the spectator view. The bots see their own card colors and the public market.</p>
+      <a class="text-link" href="replay.html">Open replay on its own ↗</a>
+      <iframe id="game" src="replay.html" title="Ticket to Ride: Europe strategy replay with four players’ hands"></iframe>
+      <noscript><p>Enable JavaScript for the replay. The results and data are available below.</p></noscript>
+    </section>
+    <section class="case-layout" aria-labelledby="results">
+      <h2 id="results">Seven more turns paid off at one table</h2>
+      <div class="case-body">
+        <p>Against three Regulars, waiting 25 turns lifted outright wins from <strong>37.4% to 53.0%</strong>. Against three Fast Builders, the same change lowered wins from <strong>31.5% to 28.5%</strong>. Both kinds of opponent pursue tickets, but Regulars can take more tickets after finishing their first set. Fast Builders start building immediately and stick to their opening pair.</p>
+        <figure><a href="wait-comparison.png"><img src="wait-comparison.png" alt="Win-rate difference for waiting 25 instead of 18 turns: +15.6 percentage points against Regulars, −3.0 against Fast Builders and +0.1 at the mixed table."></a>
+          <figcaption>Each comparison uses 4,096 matched deals. The bars on the difference estimates show simultaneous 95% intervals across the three tables.</figcaption></figure>
+        <p>One clue comes from the tickets. Against Fast Builders, the longer wait dropped the chance of completing both tickets from 95.1% to 87.2%. Against Regulars, both versions still finished both tickets in over 95% of games.</p>
+        <p>At the mixed table, with an Adaptive player, a Long-route player and a Hoarder, the win rates were <strong>60.0% and 60.1%</strong>. Those averages hide 1,625 deals where the choice of wait changed whether Hoard &amp; Finish won outright. The longer wait won 814 of those; the shorter wait won 811.</p>
+      </div>
+    </section>
+    <section class="case-layout" aria-labelledby="method">
+      <h2 id="method">Reproduce the comparison</h2>
+      <div class="case-body">
+        <p>The simulator plays on the full classic Europe board: 47 cities, 101 tracks and 46 destination tickets. Each wait played 1,024 games from each of four seats at each table, for 24,576 games altogether. Only a sole winner after the game’s tiebreakers counts as an outright win. The six replays show the first deal at each table, played both ways.</p>
+        <p>These percentages describe the programmed opponents. A human who blocks a route on purpose, values a face-up locomotive differently, or changes plans after seeing a large hand can make the same opening play out differently.</p>
+        <p><a href="https://github.com/DevMarkusLejon/Ticket_To__Ride_Europe_Companion">Simulator and board data</a> · <a href="https://github.com/DevMarkusLejon/Ticket_To__Ride_Europe_Companion/blob/main/docs/europe-wait-comparison.md">Methods and uncertainty intervals</a> · <a href="https://github.com/DevMarkusLejon/Ticket_To__Ride_Europe_Companion/blob/main/experiments/europe_wait_pairs.csv">All 12,288 paired results</a></p>
+      </div>
+    </section>
+  </article></main>
+  <footer class="site-footer wrap"><span>Markus Lejon</span><a href="../../#projects">Back to portfolio ↑</a></footer>
+  <script>
+    const game = document.getElementById("game");
+    function fitReplay() {
+      const content = game.contentDocument?.body;
+      if (!content) return;
+      const resize = () => { game.style.height = Math.ceil(content.getBoundingClientRect().height + 4) + "px"; };
+      new ResizeObserver(resize).observe(content);
+      resize();
+    }
+    game.addEventListener("load", fitReplay, {once:true});
+    if (game.contentDocument?.getElementById("europe-replay")) fitReplay();
+  </script>
+</body>
+</html>
